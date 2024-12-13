@@ -17,6 +17,8 @@ spring:
         provider:
           google:
             user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+  config:
+    import: "classpath:application-db.yml"
 server:
   port: 1601
   ssl:
@@ -32,5 +34,4 @@ server:
       properties:
         hibernate:
           format_sql: true
-    config:
-      import: "classpath:application-db.yml"
+
