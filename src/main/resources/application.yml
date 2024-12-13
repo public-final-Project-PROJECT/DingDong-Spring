@@ -28,7 +28,7 @@ spring:
 
 
 server:
-  port: 1601
+  port: 3013
   ssl:
     enabled: true
     key-store: classpath:keystore.p12
