@@ -23,7 +23,7 @@ public class UserController {
         return userInfo;
     }
 
-    @CrossOrigin(origins = "http://localhost:1557")
+    @CrossOrigin(origins = "https://14-cloud.vercel.app")
     @PostMapping("/logout")
     public Map<String, Object> logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         // Logout from OAuth2
