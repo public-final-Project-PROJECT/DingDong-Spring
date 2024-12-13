@@ -9,14 +9,6 @@ import java.util.Map;
 @RequestMapping("/api")
 public class TestController
 {
-    @GetMapping("/test")
-    public Map<String, String> testGet()
-    {
-        Map<String, String> response = new HashMap<>();
-        response.put("message", "GET Test from Spring Boot");
-        return response;
-    }
-
     @PostMapping("/test")
     public Map<String, Object> testPost(@RequestBody Map<String, String> requestBody)
     {
