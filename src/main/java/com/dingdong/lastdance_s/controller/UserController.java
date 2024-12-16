@@ -9,7 +9,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1")
-@CrossOrigin(origins = "http://localhost:1557")
+@CrossOrigin(origins = "https://localhost:1557")
 public class UserController {
     @GetMapping("/user")
     public Map<String, Object> getUser(Authentication authentication) {

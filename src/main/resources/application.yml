@@ -18,7 +18,7 @@ spring:
             scope:
               - email
               - profile
-            redirect-uri: "http://localhost:3013/login/oauth2/code/google"
+            redirect-uri: "https://localhost:3013/login/oauth2/code/google"
         provider:
           google:
             user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
@@ -31,9 +31,9 @@ server:
   port: 3013
   ssl:
     enabled: true
-    key-store: classpath:keystore.p12
+    key-store: classpath:localhost.p12
     key-store-type: PKCS12
     key-store-password: 1
-    key-alias: key
+    key-alias: localhost
 
 

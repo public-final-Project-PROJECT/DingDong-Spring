@@ -1,5 +1,6 @@
 package com.dingdong.lastdance_s.test;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -7,16 +8,13 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:1557")
-public class TestController
-{
+public class TestController {
+
     @PostMapping("/test")
-    public Map<String, Object> testPost(@RequestBody Map<String, String> requestBody)
-    {
-        String input = requestBody.get("input"); // Extracting "input" from the JSON request
-        Map<String, Object> response = new HashMap<>();
-        response.put("message", "POST Test from Spring Boot");
-        response.put("inputReceived", input);
-        return response;
+    public ResponseEntity<Map<String, String>> testEndpoint(@RequestBody Map<String, String> request) {
+        String input = request.get("input"); // Extract the "input" field from the request body
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Received input: " + input);
+        return ResponseEntity.ok(response); // Return response as JSON
     }
 }
