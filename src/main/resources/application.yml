@@ -18,7 +18,7 @@ spring:
             scope:
               - email
               - profile
-            redirect-uri: "http://localhost:1601/login/oauth2/code/google"
+            redirect-uri: "http://localhost:3013/login/oauth2/code/google"
         provider:
           google:
             user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
