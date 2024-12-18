@@ -12,9 +12,9 @@ public class TestController {
 
     @PostMapping("/test")
     public ResponseEntity<Map<String, String>> testEndpoint(@RequestBody Map<String, String> request) {
-        String input = request.get("input"); // Extract the "input" field from the request body
+        String input = request.get("input");
         Map<String, String> response = new HashMap<>();
         response.put("message", "Received input: " + input);
-        return ResponseEntity.ok(response); // Return response as JSON
+        return ResponseEntity.ok(response);
     }
 }

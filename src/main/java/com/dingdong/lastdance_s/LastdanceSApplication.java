@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 
 @SpringBootApplication
 public class LastdanceSApplication {
-        // test
+
     public static void main(String[] args) {
         SpringApplication.run(LastdanceSApplication.class, args);
     }
