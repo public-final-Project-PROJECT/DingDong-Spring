@@ -23,5 +23,9 @@ public class Class {
     @Column(name = "class_nickname")
     private String classNickname;
 
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
+
     
 }
