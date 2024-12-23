@@ -16,6 +16,10 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public Optional<String> getSchoolNameByEmail(String email) {
+        return userRepository.findSchoolNameByEmail(email);
+    }
+
     public void saveOrUpdateUser(User user)
     {
         Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
@@ -31,8 +35,9 @@ public class UserService {
             {
                 updatedUser.setPicture(user.getPicture());
             }
-            if (user.getSchoolName() != null)
-            {
+            if ("RESET".equals(user.getSchoolName())) {
+                updatedUser.setSchoolName(null);
+            } else if (user.getSchoolName() != null) {
                 updatedUser.setSchoolName(user.getSchoolName());
             }
 

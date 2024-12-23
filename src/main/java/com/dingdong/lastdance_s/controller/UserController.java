@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -48,6 +49,13 @@ public class UserController {
         userService.saveOrUpdateUser(user);
 
         return ResponseEntity.ok("User info saved successfully!");
+    }
+
+    @GetMapping("/get/school/{email}")
+    public ResponseEntity<?> getSchoolName(@PathVariable String email) {
+        Optional<String> schoolName = userService.getSchoolNameByEmail(email);
+        return schoolName.<ResponseEntity<?>>map(s -> ResponseEntity.ok(Map.of("schoolName", s))).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Map.of("status", "error", "message", "School name not found for the given email")));
     }
 
     @DeleteMapping("/withdraw/{email}")
