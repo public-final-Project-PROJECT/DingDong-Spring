@@ -102,7 +102,7 @@ public class Voting {
         this.createdAt = createdAt;
     }
 
-    public boolean isVote() {
+    public boolean isVote(boolean b) {
         return isVote;
     }
 
