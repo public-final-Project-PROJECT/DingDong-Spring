@@ -1,8 +1,8 @@
 package com.dingdong.lastdance_s.service;
 
 
-import com.dingdong.lastdance_s.model.voting.Voting;
-import com.dingdong.lastdance_s.model.voting.VotingContents;
+import com.dingdong.lastdance_s.entity.voting.Voting;
+import com.dingdong.lastdance_s.entity.voting.VotingContents;
 import com.dingdong.lastdance_s.repository.voting.VotingContentsRepository;
 import com.dingdong.lastdance_s.repository.voting.VotingRepository;
 import org.springframework.beans.factory.annotation.Autowired;

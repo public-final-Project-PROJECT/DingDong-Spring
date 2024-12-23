@@ -1,4 +1,4 @@
-package com.dingdong.lastdance_s.model.voting;
+package com.dingdong.lastdance_s.entity.voting;
 
 
 import jakarta.persistence.*;

@@ -1,4 +1,4 @@
-package com.dingdong.lastdance_s.model.voting;
+package com.dingdong.lastdance_s.entity.voting;
 
 
 import jakarta.persistence.*;
@@ -26,7 +26,6 @@ public class Voting {
     @Column(name = "voting_end")
     private LocalDateTime votingEnd;  // 투표 마감일
 
-    @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;  // 투표 생성일
 
