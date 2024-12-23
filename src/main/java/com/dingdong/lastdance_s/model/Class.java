@@ -10,7 +10,7 @@ public class Class {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "class_id")
-    private int id;
+    private int classId;
 
     @Column(name = "school_name")
     private String schoolName;
@@ -31,8 +31,8 @@ public class Class {
     public Class() {
     }
 
-    public Class(int id, String schoolName, int grade, int className, String classNickname, Teacher teacherId) {
-        this.id = id;
+    public Class(int classId, String schoolName, int grade, int className, String classNickname, Teacher teacherId) {
+        this.classId = classId;
         this.schoolName = schoolName;
         this.grade = grade;
         this.className = className;
@@ -40,12 +40,12 @@ public class Class {
         this.teacherId = teacherId;
     }
 
-    public int getId() {
-        return id;
+    public int getClassId() {
+        return classId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setClassId(int classId) {
+        this.classId = classId;
     }
 
     public String getSchoolName() {
@@ -88,11 +88,10 @@ public class Class {
         this.teacherId = teacherId;
     }
 
-
     @Override
     public String toString() {
         return "Class{" +
-                "id=" + id +
+                "classId=" + classId +
                 ", schoolName='" + schoolName + '\'' +
                 ", grade=" + grade +
                 ", className=" + className +
