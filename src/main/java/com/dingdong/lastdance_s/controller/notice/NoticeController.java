@@ -27,6 +27,10 @@ public class NoticeController {
     public ResponseEntity<List<Notice>> view() {
 
         List<Notice> list = noticeService.getNoticesByClassId(id);
+        System.out.println("gk");
+        for (Notice notice : list) {
+            System.out.println(notice);
+        }
 
         return  ResponseEntity.ok(list);
     }
