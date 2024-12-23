@@ -19,32 +19,35 @@ public class Notice {
     @Enumerated(EnumType.STRING)
     private NoticeCategory noticeCategory;
 
-    @Column(name = "notice_title ")
+    @Column(name = "notice_title")
     private String noticeTitle;
 
-    @Column(name = "notice_content ")
+    @Column(name = "notice_content")
     private String noticeContent;
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at ")
+    @Column(name = "created_at")
     private Timestamp createdAt;
 
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_at ")
+    @Column(name = "updated_at")
     private Timestamp updatedAt;
 
-    @Column(name = "notice_img ")
+    @Column(name = "notice_img")
     private String noticeImg;
 
-    @Column(name = "notice_file ")
+    @Column(name = "notice_file")
     private String noticeFile;
+
+    @Column(name = "class_id")
+    private int classId;
 
     public Notice() {
     }
 
-    public Notice(int noticeId, NoticeCategory noticeCategory, String noticeTitle, String noticeContent, Timestamp createdAt, Timestamp updatedAt, String noticeImg, String noticeFile) {
+    public Notice(int noticeId, NoticeCategory noticeCategory, String noticeTitle, String noticeContent, Timestamp createdAt, Timestamp updatedAt, String noticeImg, String noticeFile, int classId) {
         this.noticeId = noticeId;
         this.noticeCategory = noticeCategory;
         this.noticeTitle = noticeTitle;
@@ -53,6 +56,7 @@ public class Notice {
         this.updatedAt = updatedAt;
         this.noticeImg = noticeImg;
         this.noticeFile = noticeFile;
+        this.classId = classId;
     }
 
     public int getNoticeId() {
@@ -119,6 +123,14 @@ public class Notice {
         this.noticeFile = noticeFile;
     }
 
+    public int getClassId() {
+        return classId;
+    }
+
+    public void setClassId(int classId) {
+        this.classId = classId;
+    }
+
     @Override
     public String toString() {
         return "Notice{" +
@@ -130,6 +142,7 @@ public class Notice {
                 ", updatedAt=" + updatedAt +
                 ", noticeImg='" + noticeImg + '\'' +
                 ", noticeFile='" + noticeFile + '\'' +
+                ", classId=" + classId +
                 '}';
     }
 

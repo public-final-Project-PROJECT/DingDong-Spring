@@ -1,5 +1,6 @@
 package com.dingdong.lastdance_s.service;
 
+import com.dingdong.lastdance_s.model.Class;
 import com.dingdong.lastdance_s.model.Notice;
 import com.dingdong.lastdance_s.repository.NoticeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,11 @@ public class NoticeService {
     NoticeRepository noticeRepository;
 
 
-    public List<Notice> getNoticesByClassId(int id) {
-        return noticeRepository.findAllById(Collections.singleton(id));
+    public List<Notice> getNoticesByClassId(int classId) {
+        return noticeRepository.findAllByClassId(classId);
+    }
+
+    public List<Notice> getNoticeIdByNotice(int noticeId) {
+        return  noticeRepository.findAllByNoticeId(noticeId);
     }
 }

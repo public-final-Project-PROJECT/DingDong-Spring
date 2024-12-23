@@ -1,6 +1,7 @@
 package com.dingdong.lastdance_s.controller.notice;
 
 
+import com.dingdong.lastdance_s.model.Class;
 import com.dingdong.lastdance_s.model.Notice;
 import com.dingdong.lastdance_s.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,22 +16,29 @@ import java.util.Objects;
 @RequestMapping("/api/notice")
 public class NoticeController {
 
-    int id = 1;
+    int classId = 1;
 
     @Autowired
     private NoticeService noticeService;
 
     @GetMapping("/view")
     public ResponseEntity<List<Notice>> view() {
-
-        List<Notice> list = noticeService.getNoticesByClassId(id);
-        System.out.println("gk");
-        for (Notice notice : list) {
-            System.out.println(notice);
-        }
+        List<Notice> list = noticeService.getNoticesByClassId(classId);
+//        for (Notice notice : list) {
+//            System.out.println(notice);
+//        }
 
         return ResponseEntity.ok(list);
     }
+
+    @GetMapping("/detail/{noticeId}")
+    public ResponseEntity<List<Notice>> viewDetail(@PathVariable int noticeId){
+
+        List<Notice> list = noticeService.getNoticeIdByNotice(noticeId);
+        return ResponseEntity.ok(list);
+
+    }
+
 
     @PostMapping("/insert")
     public ResponseEntity<Object> insert(@RequestBody Notice notice) {
