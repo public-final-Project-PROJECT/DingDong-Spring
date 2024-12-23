@@ -9,7 +9,8 @@ public class Teacher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "teacher_id")
+    private Long teacherId;
 
     @Column(name = "teacher_name")
     private String teacherName;
@@ -23,19 +24,19 @@ public class Teacher {
     public Teacher() {
     }
 
-    public Teacher(Long id, String teacherName, String teacherImage, String teacherEmail) {
-        this.id = id;
+    public Teacher(Long teacherId, String teacherName, String teacherImage, String teacherEmail) {
+        this.teacherId = teacherId;
         this.teacherName = teacherName;
         this.teacherImage = teacherImage;
         this.teacherEmail = teacherEmail;
     }
 
-    public Long getId() {
-        return id;
+    public Long getTeacherId() {
+        return teacherId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setTeacherId(Long teacherId) {
+        this.teacherId = teacherId;
     }
 
     public String getTeacherName() {
@@ -65,7 +66,7 @@ public class Teacher {
     @Override
     public String toString() {
         return "Teacher{" +
-                "id=" + id +
+                "teacherId=" + teacherId +
                 ", teacherName='" + teacherName + '\'' +
                 ", teacherImage='" + teacherImage + '\'' +
                 ", teacherEmail='" + teacherEmail + '\'' +

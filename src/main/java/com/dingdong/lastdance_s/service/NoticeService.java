@@ -5,6 +5,7 @@ import com.dingdong.lastdance_s.repository.NoticeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -14,6 +15,6 @@ public class NoticeService {
 
 
     public List<Notice> getNoticesByClassId(int id) {
-        return noticeRepository.findByClassId(id);
+        return noticeRepository.findAllById(Collections.singleton(id));
     }
 }

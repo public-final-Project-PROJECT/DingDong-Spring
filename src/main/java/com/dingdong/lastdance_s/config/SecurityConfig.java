@@ -20,7 +20,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login/**", "/oauth2/**", "/api/test").permitAll()
+                        .requestMatchers("/", "/login/**", "/oauth2/**", "/api/test","/notice/view").permitAll()
                         .anyRequest().authenticated()
                 );
 

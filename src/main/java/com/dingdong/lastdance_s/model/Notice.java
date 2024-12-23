@@ -12,7 +12,8 @@ public class Notice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name = "notice_id")
+    private int noticeId;
 
     @Column(name = "notice_category")
     @Enumerated(EnumType.STRING)
@@ -43,8 +44,8 @@ public class Notice {
     public Notice() {
     }
 
-    public Notice(int id, NoticeCategory noticeCategory, String noticeTitle, String noticeContent, Timestamp createdAt, Timestamp updatedAt, String noticeImg, String noticeFile) {
-        this.id = id;
+    public Notice(int noticeId, NoticeCategory noticeCategory, String noticeTitle, String noticeContent, Timestamp createdAt, Timestamp updatedAt, String noticeImg, String noticeFile) {
+        this.noticeId = noticeId;
         this.noticeCategory = noticeCategory;
         this.noticeTitle = noticeTitle;
         this.noticeContent = noticeContent;
@@ -54,12 +55,12 @@ public class Notice {
         this.noticeFile = noticeFile;
     }
 
-    public int getId() {
-        return id;
+    public int getNoticeId() {
+        return noticeId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setNoticeId(int noticeId) {
+        this.noticeId = noticeId;
     }
 
     public NoticeCategory getNoticeCategory() {
@@ -121,7 +122,7 @@ public class Notice {
     @Override
     public String toString() {
         return "Notice{" +
-                "id=" + id +
+                "noticeId=" + noticeId +
                 ", noticeCategory=" + noticeCategory +
                 ", noticeTitle='" + noticeTitle + '\'' +
                 ", noticeContent='" + noticeContent + '\'' +
