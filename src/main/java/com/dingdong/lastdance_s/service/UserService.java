@@ -55,4 +55,10 @@ public class UserService {
         }
         userRepository.delete(user.get());
     }
+
+    public Integer findUserIdByEmail(String email)
+    {
+        Optional<Integer> userIdOptional = userRepository.findUserIdByEmail(email);
+        return userIdOptional.orElse(null);
+    }
 }

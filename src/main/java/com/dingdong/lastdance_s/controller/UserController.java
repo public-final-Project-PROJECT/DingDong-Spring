@@ -20,6 +20,11 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/{email}")
+    public Integer findUserIdByEmail(@PathVariable String email) {
+        return userService.findUserIdByEmail(email);
+    }
+
     @PostMapping("/login")
     public ResponseEntity<String> handleUserInfo(@RequestBody Map<String, Object> userInfo) {
         String name = (String) userInfo.get("name");
@@ -37,8 +42,7 @@ public class UserController {
     }
 
     @PostMapping("/add/school")
-    public ResponseEntity<String> handleAddSchool(@RequestBody Map<String, Object> userInfo)
-    {
+    public ResponseEntity<String> handleAddSchool(@RequestBody Map<String, Object> userInfo) {
         String email = (String) userInfo.get("email");
         String schoolName = (String) userInfo.get("schoolName");
 
@@ -52,11 +56,19 @@ public class UserController {
     }
 
     @GetMapping("/get/school/{email}")
-    public ResponseEntity<?> getSchoolName(@PathVariable String email) {
+    public ResponseEntity<?> getSchoolName(@PathVariable String email)
+    {
         Optional<String> schoolName = userService.getSchoolNameByEmail(email);
-        return schoolName.<ResponseEntity<?>>map(s -> ResponseEntity.ok(Map.of("schoolName", s))).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(Map.of("status", "error", "message", "School name not found for the given email")));
+
+        if (schoolName.isPresent())
+        {
+            return ResponseEntity.ok(Map.of("schoolName", schoolName.get()));
+        }
+
+        return ResponseEntity.ok(Map.of());
     }
+
+
 
     @DeleteMapping("/withdraw/{email}")
     public ResponseEntity<?> withdraw(@PathVariable String email) {
@@ -64,11 +76,9 @@ public class UserController {
             userService.withdraw(email);
             return ResponseEntity.noContent().build(); // 204 No Content
         } catch (UserNotFoundException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(Map.of("status", "error", "message", ex.getMessage()));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("status", "error", "message", ex.getMessage()));
         } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("status", "error", "message", "Unexpected error occurred"));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("status", "error", "message", "Unexpected error occurred"));
         }
     }
 }

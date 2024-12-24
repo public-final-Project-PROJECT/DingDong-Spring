@@ -1,16 +1,13 @@
 package com.dingdong.lastdance_s.controller.notice;
 
 
-import com.dingdong.lastdance_s.model.Class;
 import com.dingdong.lastdance_s.model.Notice;
 import com.dingdong.lastdance_s.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/notice")
@@ -32,7 +29,7 @@ public class NoticeController {
     }
 
     @GetMapping("/detail/{noticeId}")
-    public ResponseEntity<List<Notice>> viewDetail(@PathVariable int noticeId){
+    public ResponseEntity<List<Notice>> viewDetail(@PathVariable int noticeId) {
 
         List<Notice> list = noticeService.getNoticeIdByNotice(noticeId);
         return ResponseEntity.ok(list);
@@ -43,7 +40,7 @@ public class NoticeController {
     @PostMapping("/insert")
     public ResponseEntity<Object> insert(@RequestBody Notice notice) {
 
-            return ResponseEntity.ok("등록 완료");
+        return ResponseEntity.ok("등록 완료");
     }
 
 

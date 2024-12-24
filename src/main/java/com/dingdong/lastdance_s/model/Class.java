@@ -1,8 +1,13 @@
 package com.dingdong.lastdance_s.model;
 
 
+import com.dingdong.lastdance_s.entity.User;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "class")
 public class Class {
@@ -15,88 +20,17 @@ public class Class {
     @Column(name = "school_name")
     private String schoolName;
 
-    @Column(name = "grade_name")
+    @Column(name = "grade_no")
     private int grade;
 
-    @Column(name = "class_name")
-    private int className;
+    @Column(name = "class_no")
+    private int classNo;
 
     @Column(name = "class_nickname")
     private String classNickname;
 
     @ManyToOne
     @JoinColumn(name = "teacher_id")
-    private Teacher teacherId;
+    private User id;
 
-    public Class() {
-    }
-
-    public Class(int classId, String schoolName, int grade, int className, String classNickname, Teacher teacherId) {
-        this.classId = classId;
-        this.schoolName = schoolName;
-        this.grade = grade;
-        this.className = className;
-        this.classNickname = classNickname;
-        this.teacherId = teacherId;
-    }
-
-    public int getClassId() {
-        return classId;
-    }
-
-    public void setClassId(int classId) {
-        this.classId = classId;
-    }
-
-    public String getSchoolName() {
-        return schoolName;
-    }
-
-    public void setSchoolName(String schoolName) {
-        this.schoolName = schoolName;
-    }
-
-    public int getGrade() {
-        return grade;
-    }
-
-    public void setGrade(int grade) {
-        this.grade = grade;
-    }
-
-    public int getClassName() {
-        return className;
-    }
-
-    public void setClassName(int className) {
-        this.className = className;
-    }
-
-    public String getClassNickname() {
-        return classNickname;
-    }
-
-    public void setClassNickname(String classNickname) {
-        this.classNickname = classNickname;
-    }
-
-    public Teacher getTeacherId() {
-        return teacherId;
-    }
-
-    public void setTeacherId(Teacher teacherId) {
-        this.teacherId = teacherId;
-    }
-
-    @Override
-    public String toString() {
-        return "Class{" +
-                "classId=" + classId +
-                ", schoolName='" + schoolName + '\'' +
-                ", grade=" + grade +
-                ", className=" + className +
-                ", classNickname='" + classNickname + '\'' +
-                ", teacherId=" + teacherId +
-                '}';
-    }
 }
