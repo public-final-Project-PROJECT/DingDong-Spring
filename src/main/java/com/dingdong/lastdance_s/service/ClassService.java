@@ -1,7 +1,7 @@
 package com.dingdong.lastdance_s.service;
 
 import com.dingdong.lastdance_s.entity.User;
-import com.dingdong.lastdance_s.model.Class;
+import com.dingdong.lastdance_s.entity.Class;
 import com.dingdong.lastdance_s.repository.ClassRepository;
 import com.dingdong.lastdance_s.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

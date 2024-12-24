@@ -1,6 +1,5 @@
 package com.dingdong.lastdance_s.service;
 
-import com.dingdong.lastdance_s.model.Class;
 import com.dingdong.lastdance_s.model.Notice;
 import com.dingdong.lastdance_s.repository.NoticeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 

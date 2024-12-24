@@ -1,7 +1,6 @@
 package com.dingdong.lastdance_s.controller;
 
-import com.dingdong.lastdance_s.entity.User;
-import com.dingdong.lastdance_s.model.Class;
+import com.dingdong.lastdance_s.entity.Class;
 import com.dingdong.lastdance_s.model.ClassRequest;
 import com.dingdong.lastdance_s.service.ClassService;
 import com.dingdong.lastdance_s.service.UserService;

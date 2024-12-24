@@ -1,10 +1,11 @@
-package com.dingdong.lastdance_s.model;
+package com.dingdong.lastdance_s.entity;
 
 
-import com.dingdong.lastdance_s.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.sql.Timestamp;
 
 @Setter
 @Getter
@@ -33,4 +34,6 @@ public class Class {
     @JoinColumn(name = "teacher_id")
     private User id;
 
+    @Column(name = "class_created")
+    private Timestamp classCreated;
 }
