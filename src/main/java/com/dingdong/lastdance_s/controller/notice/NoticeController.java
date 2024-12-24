@@ -67,10 +67,44 @@ public class NoticeController {
     }
 
 
-    @PostMapping("/update")
-    public ResponseEntity<Object> update(@RequestBody Notice notice) {
+    @PostMapping("/update/{noticeId}")
+    public ResponseEntity<String> updateNotice(
+            @PathVariable("noticeId") int noticeId,
+            @RequestParam("noticeTitle") String noticeTitle,
+            @RequestParam("noticeCategory") Notice.NoticeCategory noticeCategory,
+            @RequestParam("noticeContent") String noticeContent,
+            @RequestParam(value = "noticeImg", required = false) MultipartFile noticeImg,
+            @RequestParam(value = "noticeFile", required = false) MultipartFile noticeFile
+    ) {
+        try {
+            // 먼저 noticeId에 해당하는 공지사항을 DB에서 찾음
+            Notice existingNotice = noticeService.getNoticeById(noticeId);
 
-        return ResponseEntity.ok("수정완료");
+            // 수정할 값을 설정
+            existingNotice.setNoticeTitle(noticeTitle);
+            existingNotice.setNoticeCategory(noticeCategory);
+            existingNotice.setNoticeContent(noticeContent);
+
+            // 이미지 파일 처리
+            if (noticeImg != null && !noticeImg.isEmpty()) {
+                String imgPath = noticeService.saveFile(noticeImg);  // saveFile 호출
+                existingNotice.setNoticeImg(imgPath);
+            }
+
+            // 파일 처리
+            if (noticeFile != null && !noticeFile.isEmpty()) {
+                String filePath = noticeService.saveFile(noticeFile);  // saveFile 호출
+                existingNotice.setNoticeFile(filePath);
+            }
+
+            // 공지사항 업데이트
+            noticeService.updateNotice(existingNotice);
+
+            return ResponseEntity.ok("공지사항이 수정되었습니다.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("공지사항 수정에 실패했습니다.");
+        }
     }
 
     @PostMapping("/delete/{noticeId}")

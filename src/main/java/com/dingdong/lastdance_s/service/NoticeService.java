@@ -65,7 +65,7 @@ public class NoticeService {
         return noticeRepository.save(notice);
     }
 
-    private String saveFile(MultipartFile file) throws IOException {
+    public String saveFile(MultipartFile file) throws IOException {
         String uploadDir = uploadPath; // 업로드 경로
         File directory = new File(uploadDir);
 
@@ -115,4 +115,13 @@ public class NoticeService {
         }
         return false;
     }
+
+    public Notice getNoticeById(int noticeId) {
+        return noticeRepository.findById(noticeId)
+                .orElseThrow(() -> new RuntimeException("공지사항을 찾을 수 없습니다."));
     }
+
+    public void updateNotice(Notice existingNotice) {
+        noticeRepository.save(existingNotice);
+    }
+}
