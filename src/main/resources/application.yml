@@ -21,3 +21,8 @@ spring:
               - profile
 server:
   port: 3013
+
+file:
+  upload:
+    path: C:/uploads
+    server-url: ""
