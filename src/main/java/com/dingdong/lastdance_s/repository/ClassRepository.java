@@ -25,4 +25,8 @@ public interface ClassRepository extends JpaRepository<Class, Integer> {
     @Modifying
     @Query("DELETE FROM Class c WHERE c.id.id = :teacherId")
     void deleteByUserId(@Param("teacherId") int teacherId);
+
+    @Modifying
+    @Query("DELETE FROM Class c WHERE c.id.id = :teacherId AND c.classId = :classId")
+    void deleteClassByUserIdAndId(@Param("teacherId") int teacherId, @Param("classId") int classId);
 }

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
@@ -26,29 +27,38 @@ public class ClassController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createClass(@RequestBody ClassRequest request) {
+    public ResponseEntity<String> createClass(@RequestBody ClassRequest request)
+    {
         int userId = userService.findUserIdByEmail(request.getEmail());
-        if (userId == 0) {
+        if (userId == 0)
+        {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is not authenticated.");
         }
 
         int classCount = classService.getClassCountByTeacherId(userId);
-        if (classCount >= 2) {
+        if (classCount >= 2)
+        {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body("You can only create up to 2 classes.");
         }
 
+        Timestamp createTime = new Timestamp(System.currentTimeMillis());
         String response = classService.createClass(
                 request.getEmail(),
                 request.getSchoolName(),
                 request.getGrade(),
                 request.getClassNo(),
-                request.getClassNickname()
+                request.getClassNickname(),
+                createTime
         );
+
+        if (response.startsWith("Error:"))
+        {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
 
         return ResponseEntity.ok(response);
     }
-
 
     @GetMapping
     public ResponseEntity<List<Class>> getAllClasses() {
@@ -88,8 +98,15 @@ public class ClassController {
 
     @Transactional
     @DeleteMapping("/delete/{teacherId}")
-    public ResponseEntity<Void> deleteClassById(@PathVariable int teacherId) {
+    public ResponseEntity<Void> deleteClassByUserId(@PathVariable int teacherId) {
         classService.deleteClassByUserId(teacherId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Transactional
+    @DeleteMapping("/delete/{teacherId}/{classId}")
+    public ResponseEntity<Void> deleteClassByUserIdAndClassId(@PathVariable int teacherId, @PathVariable int classId) {
+        classService.deleteClassByUserIdAndId(teacherId, classId);
         return ResponseEntity.noContent().build();
     }
 }

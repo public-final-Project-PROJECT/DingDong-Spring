@@ -1,11 +1,11 @@
 package com.dingdong.lastdance_s.entity;
 
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -36,4 +36,20 @@ public class Class {
 
     @Column(name = "class_created")
     private Timestamp classCreated;
+
+    @Column(name = "class_expire")
+    private Timestamp classExpire;
+
+    @PrePersist
+    public void setClassExpire()
+    {
+        if (classCreated == null)
+        {
+            classCreated = Timestamp.valueOf(LocalDateTime.now());
+        }
+        LocalDateTime createdDate = classCreated.toLocalDateTime();
+        int expireYear = createdDate.getMonthValue() > 3 ? createdDate.getYear() + 2 : createdDate.getYear() + 1;
+        LocalDateTime expireDate = LocalDateTime.of(expireYear, 3, 1, 0, 0);
+        this.classExpire = Timestamp.valueOf(expireDate);
+    }
 }
