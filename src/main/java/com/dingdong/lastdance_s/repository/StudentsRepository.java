@@ -1,7 +1,6 @@
 package com.dingdong.lastdance_s.repository;
 
 
-import com.dingdong.lastdance_s.model.Class;
 import com.dingdong.lastdance_s.model.Students;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

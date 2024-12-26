@@ -1,6 +1,5 @@
 package com.dingdong.lastdance_s.controller;
 
-import com.dingdong.lastdance_s.model.Class;
 import com.dingdong.lastdance_s.model.Students;
 import com.dingdong.lastdance_s.service.StudentsService;
 import org.springframework.beans.factory.annotation.Autowired;
