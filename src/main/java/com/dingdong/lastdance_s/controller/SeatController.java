@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/seat")
@@ -19,8 +20,9 @@ public class SeatController {
 
     // 좌석표 테이블 조회
     @PostMapping("/findAllSeat")
-    public ResponseEntity<Object> findAllSeat(@RequestParam("classId") int classId){
+    public ResponseEntity<Object> findAllSeat(@RequestBody Map<String, Object> params){
 
+        int classId = Integer.parseInt(params.get("classId").toString());
         System.out.println("classId 넘어옴 :: " + classId);
         List<Seat> seatStudents = seatService.findAll(classId);
         if(seatStudents.size()>0){
