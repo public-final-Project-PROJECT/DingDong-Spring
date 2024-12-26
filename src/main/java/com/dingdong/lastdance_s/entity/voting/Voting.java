@@ -1,6 +1,7 @@
 package com.dingdong.lastdance_s.entity.voting;
 
 
+import aj.org.objectweb.asm.commons.Remapper;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -139,4 +140,6 @@ public class Voting {
                 ", doubleVote=" + doubleVote +
                 '}';
     }
+
+
 }

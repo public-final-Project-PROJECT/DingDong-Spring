@@ -17,7 +17,6 @@ public class SeatController {
     private SeatService seatService;
 
 
-
     // 좌석표 테이블 조회
     @PostMapping("/findAllSeat")
     public ResponseEntity<Object> findAllSeat(@RequestBody Map<String, Object> params){
@@ -30,10 +29,11 @@ public class SeatController {
         }
         return ResponseEntity.status(404).body(null);
     }
-
+//
 //    // studentId 로 학생 이름 조회
 //    @PostMapping("/findName")
 //    public ResponseEntity<Object> findName(@RequestBody Map<String, Object> params){
-//        List<Object> studentsId
+//
+//
 //    }
 }
