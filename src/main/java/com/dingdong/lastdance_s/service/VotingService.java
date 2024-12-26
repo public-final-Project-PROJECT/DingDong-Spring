@@ -34,6 +34,7 @@ public class  VotingService {
         voting.setClassId((Integer) voteData.get("classId")); // 학급 id
         voting.setVotingName(voteData.get("votingName").toString()); // 제목
         voting.setVotingDetail(voteData.get("detail").toString()); // 설명
+
         Object votingEndObj = voteData.get("votingEnd");
         if (votingEndObj != null) {
             if (!(votingEndObj instanceof LocalDateTime)) {
@@ -45,7 +46,7 @@ public class  VotingService {
         }
 
         voting.setCreatedAt(LocalDateTime.now()); // 생성일
-        voting.isVote(true); // 진행상태
+        voting.setVote(true); // 투표 진행 여부
         voting.setAnonymousVote((Boolean) voteData.get("anonymousVote")); // 비밀 투표 여부
         voting.setDoubleVote((Boolean) voteData.get("doubleVote")); // 중복 투표 가능 여부
         Voting result = votingRepository.save(voting);
@@ -72,6 +73,7 @@ public class  VotingService {
     public List<Voting> findByClassId(int classId) {
 
         List<Voting> result = votingRepository.findByClassId(classId);
+        System.out.println("트표 조회 중 서비스");
 
         if (result.size() > 0) {
             return result;
@@ -100,6 +102,7 @@ public class  VotingService {
         vr.setContentsId(contentsId);
 
         List<VotingRecord> result = Collections.singletonList(votingRecordRepository.save(vr));
+        System.out.println("저장 결과 ! : " + result);
         if (result.size() > 0) {
             return true;
         }
