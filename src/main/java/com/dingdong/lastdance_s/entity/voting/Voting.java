@@ -1,6 +1,7 @@
 package com.dingdong.lastdance_s.entity.voting;
 
 
+import aj.org.objectweb.asm.commons.Remapper;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -26,7 +27,6 @@ public class Voting {
     @Column(name = "voting_end")
     private LocalDateTime votingEnd;  // 투표 마감일
 
-    @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;  // 투표 생성일
 
@@ -102,7 +102,7 @@ public class Voting {
         this.createdAt = createdAt;
     }
 
-    public boolean isVote() {
+    public boolean isVote(boolean b) {
         return isVote;
     }
 
@@ -140,4 +140,6 @@ public class Voting {
                 ", doubleVote=" + doubleVote +
                 '}';
     }
+
+
 }
