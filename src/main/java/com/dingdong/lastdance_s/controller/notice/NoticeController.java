@@ -18,7 +18,7 @@ import java.util.Objects;
 @RequestMapping("/api/notice")
 public class NoticeController {
 
-    int classId = 1;
+    //int classId = 1;
 
     @Autowired
     private NoticeService noticeService;
@@ -27,8 +27,9 @@ public class NoticeController {
 
 
     @GetMapping("/view")
-    public ResponseEntity<List<Notice>> view() {
+    public ResponseEntity<List<Notice>> view(@RequestParam("classId") int classId) {
         List<Notice> list = noticeService.getNoticesByClassId(classId);
+
 //        for (Notice notice : list) {
 //            System.out.println(notice);
 //        }
