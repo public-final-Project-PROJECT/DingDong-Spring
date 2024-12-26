@@ -13,7 +13,7 @@ public class Voting {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;  // 투표 고유 id
+    private int votingId;  // 투표 고유 id
 
     @Column(name = "class_id")
     private int classId;  // 학급 고유 id
@@ -42,8 +42,8 @@ public class Voting {
     public Voting() {
     }
 
-    public Voting(int id, int classId, String votingName, String votingDetail, LocalDateTime votingEnd, LocalDateTime createdAt, boolean isVote, boolean anonymousVote, boolean doubleVote) {
-        this.id = id;
+    public Voting(int votingId, int classId, String votingName, String votingDetail, LocalDateTime votingEnd, LocalDateTime createdAt, boolean isVote, boolean anonymousVote, boolean doubleVote) {
+        this.votingId = votingId;
         this.classId = classId;
         this.votingName = votingName;
         this.votingDetail = votingDetail;
@@ -55,11 +55,11 @@ public class Voting {
     }
 
     public int getId() {
-        return id;
+        return votingId;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.votingId = id;
     }
 
     public int getClassId() {
@@ -102,6 +102,9 @@ public class Voting {
         this.createdAt = createdAt;
     }
 
+    public boolean isVote() {
+        return isVote;
+    }
     public boolean isVote(boolean b) {
         return isVote;
     }
@@ -129,7 +132,7 @@ public class Voting {
     @Override
     public String toString() {
         return "Voting{" +
-                "id=" + id +
+                "votingId=" + votingId +
                 ", classId=" + classId +
                 ", votingName='" + votingName + '\'' +
                 ", votingDetail='" + votingDetail + '\'' +
