@@ -109,4 +109,17 @@ public class ClassController {
         classService.deleteClassByUserIdAndId(teacherId, classId);
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/update/{teacherId}/{classId}")
+    public ResponseEntity<String> updateClassName(
+            @PathVariable int teacherId,
+            @PathVariable int classId,
+            @RequestBody ClassRequest request) {
+        boolean isUpdated = classService.updateClassName(teacherId, classId, request.getClassNickname());
+        if (isUpdated) {
+            return ResponseEntity.ok("Class name updated successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to update class name.");
+        }
+    }
 }
