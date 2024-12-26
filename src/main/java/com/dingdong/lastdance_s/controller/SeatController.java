@@ -31,8 +31,9 @@ public class SeatController {
         return ResponseEntity.status(404).body(null);
     }
 
-    @GetMapping("/test")
-    public String test() {
-        return "테스트다 ~!";
-    }
+//    // studentId 로 학생 이름 조회
+//    @PostMapping("/findName")
+//    public ResponseEntity<Object> findName(@RequestBody Map<String, Object> params){
+//        List<Object> studentsId
+//    }
 }

@@ -21,8 +21,10 @@ public class User {
     @Column(name = "teacher_img")
     private String picture;
 
-    @Column(name = "teacher_email")
+    @Column(name = "teacher_email", unique = true, nullable = false)
     private String email;
 
+    @Column(name = "school_name")
+    private String schoolName;
 }
 
