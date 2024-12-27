@@ -1,6 +1,6 @@
 package com.dingdong.lastdance_s.controller;
 
-import com.dingdong.lastdance_s.model.Class;
+
 import com.dingdong.lastdance_s.model.Students;
 import com.dingdong.lastdance_s.service.StudentsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,6 @@ public class StudentsController {
     @GetMapping("/view")
     public ResponseEntity<List<Students>> view(@RequestParam("classId") int classId) {
       List<Students> list =  studentsService.getStudentsByClassId(classId);
-        System.out.println("여기");
       for (Students students : list) {
           System.out.println(students);
       }
