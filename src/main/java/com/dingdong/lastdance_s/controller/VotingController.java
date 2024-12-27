@@ -81,7 +81,7 @@ public class VotingController {
 
    // 사용자 투표 항목 저장 요청
     @PostMapping("uservoteinsert")
-    public ResponseEntity<Object> userVoteInsert(
+    public ResponseEntity<Object> usegit addrVoteInsert(
             @RequestBody Map<String, Object> voteData
     ){
         System.out.println("유저가 투표한거 넘엉옴");
