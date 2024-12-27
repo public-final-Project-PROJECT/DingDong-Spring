@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface VotingRecordRepository extends JpaRepository<VotingRecord, Integer> {
     List<VotingRecord> findByStudentId(int studentId);
+
+    List<VotingRecord> findByVotingId(int votingId);
 }

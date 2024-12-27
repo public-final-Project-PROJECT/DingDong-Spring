@@ -94,4 +94,14 @@ public class ClassService {
     public void deleteClassByUserIdAndId(int teacherId, int classId) {
         classRepository.deleteClassByUserIdAndId(teacherId, classId);
     }
+
+    public boolean updateClassName(int teacherId, int classId, String newClassName) {
+        Class existingClass = classRepository.findByIdAndUserId(classId, teacherId);
+        if (existingClass != null) {
+            existingClass.setClassNickname(newClassName);
+            classRepository.save(existingClass);
+            return true;
+        }
+        return false;
+    }
 }

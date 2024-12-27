@@ -3,11 +3,13 @@ package com.dingdong.lastdance_s.controller;
 import com.dingdong.lastdance_s.entity.voting.Voting;
 import com.dingdong.lastdance_s.entity.voting.VotingContents;
 import com.dingdong.lastdance_s.entity.voting.VotingRecord;
+import com.dingdong.lastdance_s.repository.voting.VotingRecordRepository;
 import com.dingdong.lastdance_s.service.VotingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,6 +22,9 @@ public class VotingController {
 
     @Autowired
     private VotingService votingService;
+
+    @Autowired
+    private VotingRecordRepository votingRecordRepository;
 
 
     // 투표 생성 메소드
@@ -81,7 +86,7 @@ public class VotingController {
 
    // 사용자 투표 항목 저장 요청
     @PostMapping("uservoteinsert")
-    public ResponseEntity<Object> usegit addrVoteInsert(
+    public ResponseEntity<Object> userVoteInsert(
             @RequestBody Map<String, Object> voteData
     ){
         System.out.println("유저가 투표한거 넘엉옴");
@@ -104,19 +109,53 @@ public class VotingController {
         int votingId = (int) voteData.get("votingId");
         int studentId = (int) voteData.get("studentId");
 
-        List<VotingRecord> result = votingService.findByStudentId(votingId, studentId);
-        if(result != null){
-            System.out.println("학생 투표 값 :: " + result);
-            return ResponseEntity.ok(result);
+        // 1. 이 투표 고유 id 로 이 투표에 투표한 유저 id 와 항목 정보를 불러온다.
+        List<VotingRecord> result = votingRecordRepository.findByVotingId(votingId);
+
+        if(result == null){
+            return ResponseEntity.status(500).body(null);
+        }else{
+            System.out.println(result);
+
+            result.getClass();
+            result.toString();
+
+            List<Integer> userVote = new ArrayList<>();
+            for(VotingRecord user : result){
+                if(user.getStudentId() == studentId){
+                    userVote.add(user.getVotingId()); // 투표 id
+                    userVote.add(user.getContentsId()); // 유저가 투표한 항목
+
+                }
+            }
+            return ResponseEntity.ok(null);
         }
-        return ResponseEntity.status(500).body(null);
     }
 
-//    // (투표 후) 각 항목들에 대한 유저의 투표 정보들
-//    @PostMapping("VoteOptionUsers")
-//    public ResponseEntity<Object> VoteOptionUsers(
-//            @RequestBody Map<String, Object> voteData
-//    )
+    // (투표 후) 각 항목들에 대한 유저의 투표 정보들
+    @PostMapping("VoteOptionUsers")
+    public ResponseEntity<Object> VoteOptionUsers(
+            @RequestBody Map<String, Object> voteData
+    ){
+        // 투표를 한 유저의 그 투표의 id 를 보낸거니까 해당 투표의 투표 유저들만 보내주면 됌
+
+         int votingId = (int) voteData.get("votingId");
+        // int classId = (int) voteData.get("classId");
+
+        //1. 해당 클래스에 속한 모든 투표 조회
+        List<VotingRecord> result = votingRecordRepository.findByVotingId(votingId);
+
+        List<Integer> userVoteData = new ArrayList<>();
+
+//        for(VotingRecord user : result){
+//            userVoteData.add(user.getStudentId());
+//        }
+        if(result == null){
+            return ResponseEntity.status(500).body(null);
+        }
+        return ResponseEntity.ok(result);
+
+    }
 
     // 투표 종료 저장 요청(교사만 가능)
     @PostMapping("isVoteUpdate")

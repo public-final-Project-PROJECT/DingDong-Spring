@@ -95,18 +95,19 @@ public class  VotingService {
         int votingId = (int)voteData.get("votingId");
         int studentId = (int)voteData.get("studentId");
         int contentsId = (int)voteData.get("contentsId");
+        System.out.println(" 잘넘어오나아아아: " + studentId+votingId+contentsId );
 
         VotingRecord vr = new VotingRecord();
         vr.setVotingId(votingId);
         vr.setStudentId(studentId);
         vr.setContentsId(contentsId);
 
-        List<VotingRecord> result = Collections.singletonList(votingRecordRepository.save(vr));
+        VotingRecord result = votingRecordRepository.save(vr);
         System.out.println("저장 결과 ! : " + result);
-        if (result.size() > 0) {
-            return true;
-        }
-        return false;
+       if(result != null) {
+           return true;
+       }
+       return false;
     }
 
     public boolean updateIsVote(int votingId) {

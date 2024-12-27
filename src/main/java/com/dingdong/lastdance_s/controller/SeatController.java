@@ -1,6 +1,8 @@
 package com.dingdong.lastdance_s.controller;
 
 import com.dingdong.lastdance_s.entity.Seat;
+import com.dingdong.lastdance_s.entity.User;
+import com.dingdong.lastdance_s.model.Students;
 import com.dingdong.lastdance_s.service.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,11 +31,18 @@ public class SeatController {
         }
         return ResponseEntity.status(404).body(null);
     }
-//
-//    // studentId 로 학생 이름 조회
-//    @PostMapping("/findName")
-//    public ResponseEntity<Object> findName(@RequestBody Map<String, Object> params){
-//
-//
-//    }
+
+    // studentId 로 학생 이름 조회
+    @PostMapping("/findName")
+    public ResponseEntity<Object> findName(@RequestBody Map<String, Object> params){
+
+        int classId = Integer.parseInt(params.get("classId").toString());
+        List<Students> nameList = seatService.findName(classId);
+
+        if(nameList.size()>0){
+            return ResponseEntity.ok(nameList);
+        }
+        return ResponseEntity.status(404).body(null);
+
+    }
 }
