@@ -19,14 +19,12 @@ public class AttendanceController {
 
 
     @GetMapping("/view/{classId}")
-    public ResponseEntity<List<Attendance>>getTodayAttendance(@PathVariable("classId") int classId,
-                                                              @RequestParam("todayDate") LocalDate attendanceDate){
-
-
+    public ResponseEntity<List<AttendanceDTO>>getTodayAttendance(@PathVariable("classId") int classId,
+                                                              @RequestParam("attendanceDate") LocalDate attendanceDate){
         System.out.println("classId:"+classId + " todayDate:"+attendanceDate);
-        List<Attendance> list = attendanceService.getTodayAttendance(classId,attendanceDate);
+        List<AttendanceDTO> list = attendanceService.getTodayAttendance(classId,attendanceDate);
 
-        for (Attendance attendance : list){
+        for (AttendanceDTO attendance : list){
             System.out.println(attendance);
         }
 
@@ -40,14 +38,14 @@ public class AttendanceController {
 
     @PostMapping("/register")
     public ResponseEntity<String> registerAttendance(@RequestBody List<AttendanceDTO> attendanceDTOList) {
+
+        System.out.println(attendanceDTOList);
         try {
-            List<Attendance> attendanceList = attendanceService.convertDTOToEntity(attendanceDTOList);
-            attendanceService.saveAttendances(attendanceList);
+            attendanceService.saveOrUpdateAttendances(attendanceDTOList);
             return ResponseEntity.ok("출석 정보가 성공적으로 저장되었습니다.");
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("출석 정보 저장에 실패했습니다.");
         }
     }
-
 }

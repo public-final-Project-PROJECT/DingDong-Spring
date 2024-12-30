@@ -23,30 +23,35 @@ public class AttendanceService {
         return attendanceRepository.saveAll(attendanceList);
     }
 
-    public List<Attendance> convertDTOToEntity(List<AttendanceDTO> attendanceDTOList) {
-        return attendanceDTOList.stream().map(dto -> {
-            Attendance attendance = new Attendance();
-            Students student = new Students();
-            student.setStudentId(dto.getStudentId()); // 학생 ID 설정
 
-            attendance.setStudentId(student);
-            attendance.setAttendanceDate(dto.getAttendanceDate());
-            attendance.setAttendanceState(dto.getAttendanceState());
-            attendance.setAttendanceEtc(dto.getAttendanceEtc());
-            attendance.setClassId(dto.getClassId());
-
-            return attendance;
-        }).collect(Collectors.toList());
-    }
-
-    public void saveAttendances(List<Attendance> attendanceList) {
-        attendanceRepository.saveAll(attendanceList);
-
-    }
-
-    public List<Attendance> getTodayAttendance(int classId, LocalDate attendanceDate) {
-        List<Attendance> list =   attendanceRepository.findAttendanceByClassIdAndDate(classId,attendanceDate);
+    public List<AttendanceDTO> getTodayAttendance(int classId, LocalDate attendanceDate) {
+        List<AttendanceDTO> list =   attendanceRepository.findByClassIdAndAttendanceDate(classId,attendanceDate);
         return list;
 
+    }
+
+    public void saveOrUpdateAttendances(List<AttendanceDTO> attendanceDTOList) {
+        for (AttendanceDTO dto : attendanceDTOList) {
+            Attendance existingAttendance = attendanceRepository
+                    .findByStudentIdAndAttendanceDate(dto.getStudentId(), dto.getAttendanceDate());
+
+            if (existingAttendance != null) {
+                // 기존 출석 데이터 업데이트
+                existingAttendance.setAttendanceState(dto.getAttendanceState());
+                existingAttendance.setAttendanceEtc(dto.getAttendanceEtc());
+                attendanceRepository.save(existingAttendance);
+            } else {
+                // 새로운 출석 데이터 삽입
+                Attendance newAttendance = new Attendance();
+                Students student = new Students();
+                student.setStudentId(dto.getStudentId());
+                newAttendance.setStudentId(student);
+                newAttendance.setAttendanceDate(dto.getAttendanceDate());
+                newAttendance.setAttendanceState(dto.getAttendanceState());
+                newAttendance.setAttendanceEtc(dto.getAttendanceEtc());
+                newAttendance.setClassId(dto.getClassId());
+                attendanceRepository.save(newAttendance);
+            }
+        }
     }
 }
