@@ -1,6 +1,7 @@
 package com.dingdong.lastdance_s.service;
 
 
+import com.dingdong.lastdance_s.dto.StudentsDTO;
 import com.dingdong.lastdance_s.model.Students;
 import com.dingdong.lastdance_s.repository.StudentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,18 @@ public class StudentsService {
                 .orElseThrow(() -> new RuntimeException("학생을 찾을 수 없습니다."));
         student.setMemo(memo);
         studentsRepository.save(student);
+    }
+
+    public List<StudentsDTO> getStudentsByClass(int classId) {
+
+        List<StudentsDTO> list = studentsRepository.findClassByClassId(classId);
+        return list;
+    }
+
+    public StudentsDTO getStudentsAndClassByStudentId(int studentId) {
+
+        StudentsDTO list = studentsRepository.findStudentsAndClassByStudentId(studentId);
+        return list;
     }
 }
 
