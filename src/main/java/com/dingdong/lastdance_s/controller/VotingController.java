@@ -3,6 +3,7 @@ package com.dingdong.lastdance_s.controller;
 import com.dingdong.lastdance_s.entity.voting.Voting;
 import com.dingdong.lastdance_s.entity.voting.VotingContents;
 import com.dingdong.lastdance_s.entity.voting.VotingRecord;
+import com.dingdong.lastdance_s.model.Students;
 import com.dingdong.lastdance_s.repository.voting.VotingRecordRepository;
 import com.dingdong.lastdance_s.service.VotingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,7 +90,7 @@ public class VotingController {
     public ResponseEntity<Object> userVoteInsert(
             @RequestBody Map<String, Object> voteData
     ){
-        System.out.println("유저가 투표한거 넘엉옴");
+        System.out.println("유저가 투표한거 ssssssssssssssss넘엉옴");
         System.out.println("유저 투.정 저장 :: " + voteData);
 
         boolean result = votingService.saveVotingRecord(voteData);
@@ -115,7 +116,7 @@ public class VotingController {
         if(result == null){
             return ResponseEntity.status(500).body(null);
         }else{
-            System.out.println(result);
+            System.out.println("result :: " + result);
 
             result.getClass();
             result.toString();
@@ -125,10 +126,10 @@ public class VotingController {
                 if(user.getStudentId() == studentId){
                     userVote.add(user.getVotingId()); // 투표 id
                     userVote.add(user.getContentsId()); // 유저가 투표한 항목
-
                 }
             }
-            return ResponseEntity.ok(null);
+            System.out.println("userVote : " + userVote);
+            return ResponseEntity.ok(userVote);
         }
     }
 
@@ -138,12 +139,14 @@ public class VotingController {
             @RequestBody Map<String, Object> voteData
     ){
         // 투표를 한 유저의 그 투표의 id 를 보낸거니까 해당 투표의 투표 유저들만 보내주면 됌
+        System.out.println("voteData :: " + voteData);
 
          int votingId = (int) voteData.get("votingId");
-        // int classId = (int) voteData.get("classId");
+         int classId = (int) voteData.get("classId");
 
-        //1. 해당 클래스에 속한 모든 투표 조회
+        // 1. 해당 투표의 모든 유저의 투표 정보를 가져온다.
         List<VotingRecord> result = votingRecordRepository.findByVotingId(votingId);
+        System.out.println("resut ++ " + result);
 
         List<Integer> userVoteData = new ArrayList<>();
 
@@ -157,15 +160,38 @@ public class VotingController {
 
     }
 
-    // 투표 종료 저장 요청(교사만 가능)
+
+    // 해당 학급에 속한 학생들의 이름, img 가지고오기
+    @PostMapping("findStudentsName")
+    public ResponseEntity<Object> findStudentsName (
+            @RequestBody Map<String, Object> voteData
+    ){
+        System.out.println("이름 조회에에에ㅔ에에");
+        System.out.println("voteData  클래스 idididid :: " + voteData);
+        int classId = (int) voteData.get("classId");
+        List<Students> studentsList = votingService.findByStudentsName(classId);
+        System.out.println("애들 인포 : " + studentsList);
+        if(studentsList.isEmpty()){
+            return ResponseEntity.status(500).body(null);
+        }
+        return ResponseEntity.ok(studentsList);
+
+    }
+
+    // 투표 종료
     @PostMapping("isVoteUpdate")
     public ResponseEntity<Object> isVoteUpdate(
             @RequestBody Map<String, Object> voteData
     ){
+        System.out.println("voteData :: " + voteData);
         int votingId = (int) voteData.get("votingId");
+        System.out.println("votingId ::  " + votingId);
         boolean result = votingService.updateIsVote(votingId);
+
+        System.out.println("result : " + result);
+
         if(result){
-            return ResponseEntity.ok(null);
+            return ResponseEntity.ok("투표가 성공적으로 종료되었습니다.");
         }
         return ResponseEntity.status(500).body(null);
     }
