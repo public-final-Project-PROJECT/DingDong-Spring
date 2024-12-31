@@ -32,3 +32,4 @@ public interface StudentsRepository  extends JpaRepository<Students, Integer> {
             "WHERE s.studentId = :studentId")
     StudentsDTO findStudentsAndClassByStudentId(@Param("studentId") int studentId);
 }
+

@@ -22,11 +22,11 @@ public class StudentsController {
 
     @GetMapping("/view")
     public ResponseEntity<List<Students>> view(@RequestParam("classId") int classId) {
-      List<Students> list =  studentsService.getStudentsByClassId(classId);
+        List<Students> list =  studentsService.getStudentsByClassId(classId);
 //      for (Students students : list) {
 //          System.out.println(students);
 //      }
-      return ResponseEntity.ok(list);
+        return ResponseEntity.ok(list);
 
     }
 
@@ -54,9 +54,9 @@ public class StudentsController {
     public  ResponseEntity<List<Students>> viewDe
             (@PathVariable("studentId") int studentId) {
 
-      List<Students> list =  studentsService.getStudentsByStudentId(studentId);
+        List<Students> list =  studentsService.getStudentsByStudentId(studentId);
 
-      return ResponseEntity.ok(list);
+        return ResponseEntity.ok(list);
     }
 
     @PostMapping("/updateMemo/{studentId}")
