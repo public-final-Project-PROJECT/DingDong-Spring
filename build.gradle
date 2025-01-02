@@ -17,6 +17,10 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+
+    configureEach {
+        exclude group: "commons-logging", module: "commons-logging"
+    }
 }
 
 repositories {
@@ -26,11 +30,10 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    testImplementation 'org.springframework.security:spring-security-test'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'com.google.api-client:google-api-client:2.2.0'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.mysql:mysql-connector-j'
@@ -38,6 +41,9 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.4'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation('com.mashape.unirest:unirest-java:1.4.9') {
+        exclude group: 'commons-logging', module: 'commons-logging'
+    }
 }
 
 tasks.named('test') {

@@ -1,4 +1,4 @@
-package com.dingdong.lastdance_s.model.voting;
+package com.dingdong.lastdance_s.entity.voting;
 
 
 import jakarta.persistence.*;
@@ -9,7 +9,7 @@ public class VotingContents {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int contentsId;  // 투표 항목 고유 id
+    private int votingContentsId;  // 투표 항목 고유 id
 
     @Column(name = "voting_id")
     private int votingId;  // 투표 고유 id
@@ -20,18 +20,18 @@ public class VotingContents {
     public VotingContents() {
     }
 
-    public VotingContents(int contentsId, int votingId, String votingContents) {
-        this.contentsId = contentsId;
+    public VotingContents(int votingContentsId, int votingId, String votingContents) {
+        this.votingContentsId = votingContentsId;
         this.votingId = votingId;
         this.votingContents = votingContents;
     }
 
     public int getContentsId() {
-        return contentsId;
+        return votingContentsId;
     }
 
     public void setContentsId(int contentsId) {
-        this.contentsId = contentsId;
+        this.votingContentsId = contentsId;
     }
 
     public int getVotingId() {
@@ -53,7 +53,7 @@ public class VotingContents {
     @Override
     public String toString() {
         return "VotingContents{" +
-                "contentsId=" + contentsId +
+                "votingContentsId=" + votingContentsId +
                 ", votingId=" + votingId +
                 ", votingContents='" + votingContents + '\'' +
                 '}';

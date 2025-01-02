@@ -1,6 +1,7 @@
-package com.dingdong.lastdance_s.model.voting;
+package com.dingdong.lastdance_s.entity.voting;
 
 
+import aj.org.objectweb.asm.commons.Remapper;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -12,7 +13,7 @@ public class Voting {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;  // 투표 고유 id
+    private int votingId;  // 투표 고유 id
 
     @Column(name = "class_id")
     private int classId;  // 학급 고유 id
@@ -26,7 +27,6 @@ public class Voting {
     @Column(name = "voting_end")
     private LocalDateTime votingEnd;  // 투표 마감일
 
-    @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;  // 투표 생성일
 
@@ -42,8 +42,8 @@ public class Voting {
     public Voting() {
     }
 
-    public Voting(int id, int classId, String votingName, String votingDetail, LocalDateTime votingEnd, LocalDateTime createdAt, boolean isVote, boolean anonymousVote, boolean doubleVote) {
-        this.id = id;
+    public Voting(int votingId, int classId, String votingName, String votingDetail, LocalDateTime votingEnd, LocalDateTime createdAt, boolean isVote, boolean anonymousVote, boolean doubleVote) {
+        this.votingId = votingId;
         this.classId = classId;
         this.votingName = votingName;
         this.votingDetail = votingDetail;
@@ -55,11 +55,11 @@ public class Voting {
     }
 
     public int getId() {
-        return id;
+        return votingId;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.votingId = id;
     }
 
     public int getClassId() {
@@ -105,6 +105,9 @@ public class Voting {
     public boolean isVote() {
         return isVote;
     }
+    public boolean isVote(boolean b) {
+        return isVote;
+    }
 
     public void setVote(boolean vote) {
         isVote = vote;
@@ -129,7 +132,7 @@ public class Voting {
     @Override
     public String toString() {
         return "Voting{" +
-                "id=" + id +
+                "votingId=" + votingId +
                 ", classId=" + classId +
                 ", votingName='" + votingName + '\'' +
                 ", votingDetail='" + votingDetail + '\'' +
@@ -140,4 +143,6 @@ public class Voting {
                 ", doubleVote=" + doubleVote +
                 '}';
     }
+
+
 }
