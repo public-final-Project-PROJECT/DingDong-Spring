@@ -1,5 +1,7 @@
 package com.dingdong.lastdance_s.controller;
 
+
+import com.dingdong.lastdance_s.dto.StudentsDTO;
 import com.dingdong.lastdance_s.model.Students;
 import com.dingdong.lastdance_s.service.StudentsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,22 +22,41 @@ public class StudentsController {
 
     @GetMapping("/view")
     public ResponseEntity<List<Students>> view(@RequestParam("classId") int classId) {
-      List<Students> list =  studentsService.getStudentsByClassId(classId);
-        System.out.println("여기");
-      for (Students students : list) {
-          System.out.println(students);
-      }
-      return ResponseEntity.ok(list);
+        List<Students> list =  studentsService.getStudentsByClassId(classId);
+//      for (Students students : list) {
+//          System.out.println(students);
+//      }
+        return ResponseEntity.ok(list);
 
     }
+
+    @GetMapping("/viewClass")
+    public ResponseEntity<List<StudentsDTO>> viewClass(@RequestParam("classId") int classId) {
+        List<StudentsDTO> list =  studentsService.getStudentsByClass(classId);
+        for (StudentsDTO students : list) {
+            System.out.println(students);
+        }
+        return ResponseEntity.ok(list);
+
+    }
+
+    @GetMapping("viewClass/{studentId}")
+    public  ResponseEntity<StudentsDTO> viewClassId
+            (@PathVariable("studentId") int studentId) {
+
+        StudentsDTO list =  studentsService.getStudentsAndClassByStudentId(studentId);
+
+        return ResponseEntity.ok(list);
+    }
+
 
     @GetMapping("view/{studentId}")
     public  ResponseEntity<List<Students>> viewDe
             (@PathVariable("studentId") int studentId) {
 
-      List<Students> list =  studentsService.getStudentsByStudentId(studentId);
+        List<Students> list =  studentsService.getStudentsByStudentId(studentId);
 
-      return ResponseEntity.ok(list);
+        return ResponseEntity.ok(list);
     }
 
     @PostMapping("/updateMemo/{studentId}")
