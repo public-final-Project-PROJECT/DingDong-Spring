@@ -1,15 +1,18 @@
 package com.dingdong.lastdance_s.service;
 
-
+import jakarta.transaction.Transactional;
 import com.dingdong.lastdance_s.entity.voting.Voting;
 import com.dingdong.lastdance_s.entity.voting.VotingContents;
 import com.dingdong.lastdance_s.entity.voting.VotingRecord;
+import com.dingdong.lastdance_s.model.Students;
+import com.dingdong.lastdance_s.repository.StudentsRepository;
 import com.dingdong.lastdance_s.repository.voting.VotingContentsRepository;
 import com.dingdong.lastdance_s.repository.voting.VotingRecordRepository;
 import com.dingdong.lastdance_s.repository.voting.VotingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -25,6 +28,8 @@ public class  VotingService {
 
     @Autowired
     private VotingRecordRepository votingRecordRepository;
+    @Autowired
+    private StudentsRepository studentsRepository;
 
 
     // 투표 insert
@@ -34,15 +39,17 @@ public class  VotingService {
         voting.setClassId((Integer) voteData.get("classId")); // 학급 id
         voting.setVotingName(voteData.get("votingName").toString()); // 제목
         voting.setVotingDetail(voteData.get("detail").toString()); // 설명
+        // String votingEndObj = (String)voteData.get("votingEnd");
 
-        Object votingEndObj = voteData.get("votingEnd");
-        if (votingEndObj != null) {
-            if (!(votingEndObj instanceof LocalDateTime)) {
-                throw new IllegalArgumentException("... " + votingEndObj);
-            }
-            voting.setVotingEnd((LocalDateTime) votingEndObj);
-        } else {
-            voting.setVotingEnd(null);
+        LocalDateTime date = null;
+
+        if (voteData.get("votingEnd") != null) {
+          // voting.setVotingEnd((LocalDateTime) votingEndObj);
+            String votingEnd = (String)voteData.get("votingEnd");
+
+                date = LocalDate.parse(votingEnd).atStartOfDay();
+                voting.setVotingEnd(date);
+
         }
 
         voting.setCreatedAt(LocalDateTime.now()); // 생성일
@@ -95,34 +102,64 @@ public class  VotingService {
         int votingId = (int)voteData.get("votingId");
         int studentId = (int)voteData.get("studentId");
         int contentsId = (int)voteData.get("contentsId");
+        System.out.println(" 잘넘어오나아아아: " + studentId+votingId+contentsId );
 
         VotingRecord vr = new VotingRecord();
         vr.setVotingId(votingId);
         vr.setStudentId(studentId);
         vr.setContentsId(contentsId);
 
-        List<VotingRecord> result = Collections.singletonList(votingRecordRepository.save(vr));
+        VotingRecord result = votingRecordRepository.save(vr);
         System.out.println("저장 결과 ! : " + result);
-        if (result.size() > 0) {
-            return true;
-        }
-        return false;
+       if(result != null) {
+           return true;
+       }
+       return false;
     }
 
     public boolean updateIsVote(int votingId) {
 
-        Voting result = (Voting) votingRepository.findById(votingId);
-        result.setVote(false); // 투표 진행 상태 바꿔주기
-        votingRepository.save(result);
-        return true;
+        Voting voting = (Voting) votingRepository.findByVotingId(votingId);
+        voting.setVote(false); // 투표 상태 (진행종료로) 바꿔주기
+        Voting result2 = votingRepository.save(voting);
+        if(result2 != null){
+            return true;
+        }
+        return false;
     }
+//
+//    public List<VotingRecord> findByStudentId(int votingId, int studentId) {
+//
+//        List<VotingRecord> result = votingRecordRepository.findByStudentId(studentId);
+//        if (result.size() > 0) {
+//            return result;
+//        }
+//        return Collections.emptyList();
+//    }
 
-    public List<VotingRecord> findByStudentId(int votingId, int studentId) {
+    public List<Students> findByStudentsName(int classId) {
 
-        List<VotingRecord> result = votingRecordRepository.findByStudentId(studentId);
+        List<Students> result = studentsRepository.findByClassId(classId);
         if (result.size() > 0) {
             return result;
         }
         return Collections.emptyList();
     }
+
+//    @Transactional
+//    public void updateExpiredVotings() {
+//        // 현재 날짜/시간 가져오기
+//        LocalDateTime now = LocalDateTime.now();
+//
+//        // 만료된 투표 조회
+//        List<Voting> expiredVotings = votingRepository.findExpiredVoting(now);
+//
+//        if (!expiredVotings.isEmpty()) {
+//            // 만료된 투표 ID 목록 추출
+//            List<Integer> expiredIds = expiredVotings.stream().map(Voting::getId).toList();
+//
+//            // is_vote를 false로 업데이트
+//            votingRepository.updateIsVoteToFalse(expiredIds);
+//        }
+//    }
 }
