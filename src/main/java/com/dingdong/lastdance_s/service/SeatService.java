@@ -1,15 +1,15 @@
 package com.dingdong.lastdance_s.service;
 
 import com.dingdong.lastdance_s.entity.Seat;
-import com.dingdong.lastdance_s.entity.User;
 import com.dingdong.lastdance_s.model.Students;
 import com.dingdong.lastdance_s.repository.SeatRepository;
 import com.dingdong.lastdance_s.repository.StudentsRepository;
-import com.dingdong.lastdance_s.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SeatService {
@@ -36,5 +36,17 @@ public class SeatService {
 
         List<Students> nameList = studentsRepository.findByClassId(classId);
         return nameList;
+    }
+
+    @Transactional
+    public void updateSeats(List<Map<String, Object>> seatList) {
+        for (Map<String, Object> seat : seatList) {
+            Integer classId = (Integer) seat.get("classId");
+            Integer studentId = (Integer) seat.get("studentId");
+            Integer rowId = (Integer) seat.get("rowId");
+            Integer columnId = (Integer) seat.get("columnId");
+
+            seatRepository.updateSeatPosition(classId, studentId, rowId, columnId);
+        }
     }
 }
