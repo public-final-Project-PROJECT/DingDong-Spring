@@ -20,6 +20,6 @@ public interface UserRepository extends JpaRepository<User, Integer>
     @Query("SELECT u.id FROM User u WHERE u.email = :email")
     Optional<Integer> findUserIdByEmail(@Param("email") String email);
 
-
+    @Query("SELECT u.latestClassId FROM User u WHERE u.email = :email")
+    Optional<Integer> findLatestClassIdByEmail(String email);
 }
-

@@ -40,6 +40,10 @@ public class UserService {
             } else if (user.getSchoolName() != null) {
                 updatedUser.setSchoolName(user.getSchoolName());
             }
+            if (user.getLatestClassId() != null)
+            {
+                updatedUser.setLatestClassId(user.getLatestClassId());
+            }
 
             userRepository.save(updatedUser);
             return;
@@ -60,5 +64,10 @@ public class UserService {
     {
         Optional<Integer> userIdOptional = userRepository.findUserIdByEmail(email);
         return userIdOptional.orElse(null);
+    }
+
+    public Optional<Integer> getLatestClassIdByEmail(String email)
+    {
+        return userRepository.findLatestClassIdByEmail(email);
     }
 }
