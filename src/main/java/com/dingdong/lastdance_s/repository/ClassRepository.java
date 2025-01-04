@@ -14,7 +14,8 @@ public interface ClassRepository extends JpaRepository<Class, Integer> {
 
     List<Class> findBySchoolName(String schoolName);
 
-    List<Class> findByGradeAndClassNo(int grade, int classNo);
+    @Query("SELECT c FROM Class c WHERE c.grade = :grade AND c.classNo = :classNo AND c.id.id = :teacherId")
+    List<Class> findByGradeAndClassNoAndUserId(int grade, int classNo, int teacherId);
 
     @Query("SELECT c FROM Class c WHERE c.id.id = :teacherId")
     List<Class> findByUserId(@Param("teacherId") int teacherId);
