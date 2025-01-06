@@ -28,7 +28,7 @@ public class ClassController {
 
     @PostMapping("/create")
     public ResponseEntity<String> createClass(@RequestBody ClassRequest request) {
-        int userId = userService.findUserIdByEmail(request.getEmail());
+        Integer userId = userService.findUserIdByEmail(request.getEmail());
         if (userId == 0) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is not authenticated.");
         }
