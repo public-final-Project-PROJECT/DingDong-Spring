@@ -22,10 +22,10 @@ public class Calender {
     private String description;
 
     @Column(name = "start_datetime", nullable = false, length = 50)
-    private String startDatetime;
+    private String start;
 
     @Column(name = "end_datetime", length = 50)
-    private String endDatetime;
+    private String end;
 
     @Column(name = "all_day", nullable = false)
     private Boolean allDay = false;
@@ -37,8 +37,8 @@ public class Calender {
                 ", title='" + title + '\'' +
                 ", isAdmin=" + isAdmin +
                 ", description='" + description + '\'' +
-                ", startDatetime='" + startDatetime + '\'' +
-                ", endDatetime='" + endDatetime + '\'' +
+                ", start='" + start + '\'' +
+                ", end='" + end + '\'' +
                 ", allDay=" + allDay +
                 ", color='" + color + '\'' +
                 ", createdAt=" + createdAt +
@@ -70,20 +70,20 @@ public class Calender {
         this.description = description;
     }
 
-    public String getStartDatetime() {
-        return startDatetime;
+    public String getStart() {
+        return start;
     }
 
-    public void setStartDatetime(String startDatetime) {
-        this.startDatetime = startDatetime;
+    public void setStart(String start) {
+        this.start = start;
     }
 
-    public String getEndDatetime() {
-        return endDatetime;
+    public String getEnd() {
+        return end;
     }
 
-    public void setEndDatetime(String endDatetime) {
-        this.endDatetime = endDatetime;
+    public void setEnd(String end) {
+        this.end = end;
     }
 
     public Boolean getAllDay() {
