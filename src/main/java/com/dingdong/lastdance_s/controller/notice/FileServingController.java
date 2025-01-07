@@ -20,6 +20,7 @@ public class FileServingController {
     // 로컬 파일 저장 경로
     private String uploadPath = "C:/uploads";
 
+    private String serverUrl = "http://112.221.66.174:3013/download/uploads/";
     // 파일 서빙
 //    @GetMapping("/uploads/{fileName}")
 //    public FileSystemResource getFile(@PathVariable String fileName) {
@@ -30,6 +31,8 @@ public class FileServingController {
 
     @GetMapping("/uploads/{fileName}")
     public ResponseEntity<Resource> getFile(@PathVariable String fileName) {
+
+
         try {
             // 파일 경로
             File file = new File(uploadPath + "/" + fileName);
@@ -43,6 +46,24 @@ public class FileServingController {
 
             // 파일의 확장자 확인
             String fileExtension = getFileExtension(fileName).toLowerCase();
+
+            if (fileExtension.equals("pdf")) {
+                Resource resource = new FileSystemResource(file);
+                return ResponseEntity.ok()
+                        .contentType(MediaType.APPLICATION_PDF) // PDF MIME 타입 설정
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + encodedFileName + "\"") // 브라우저에서 바로 보기
+                        .body(resource);
+            }
+
+            // 2. 텍스트 파일 (.txt) 처리
+            if (fileExtension.equals("txt")) {
+                Resource resource = new FileSystemResource(file);
+                return ResponseEntity.ok()
+                        .contentType(MediaType.TEXT_PLAIN) // 텍스트 파일 MIME 타입 설정
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + encodedFileName + "\"") // 브라우저에서 바로 보기
+                        .body(resource);
+            }
+
 
             // 이미지 파일이면 이미지로 처리
             if (fileExtension.equals("jpg") || fileExtension.equals("jpeg") || fileExtension.equals("png") || fileExtension.equals("gif") || fileExtension.equals("WebP") || fileExtension.equals("bmp") || fileExtension.equals("tif") || fileExtension.equals("tiff")  ||fileExtension.equals("SVG") )  {
@@ -61,6 +82,41 @@ public class FileServingController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
+    @GetMapping("/download/uploads/{fileName}") // URL 매핑 변경
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
+        try {
+            File file = new File(uploadPath + "/" + fileName);
+
+            if (!file.exists()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8).replaceAll("\\+", "%20");
+            String fileExtension = getFileExtension(fileName).toLowerCase();
+            MediaType mediaType = MediaType.APPLICATION_OCTET_STREAM;
+
+            if (fileExtension.matches("^(jpg|jpeg|png|gif|webp|bmp|tif|tiff|svg)$")) {
+                mediaType = MediaType.parseMediaType("image/" + fileExtension);
+            }else if (fileExtension.equals("pdf")) {
+                mediaType = MediaType.APPLICATION_PDF; // PDF 파일 MIME 타입
+            } else if (fileExtension.equals("txt")) {
+                mediaType = MediaType.TEXT_PLAIN; // TXT 파일 MIME 타입
+            } else if (fileExtension.equals("html") || fileExtension.equals("htm")) {
+                mediaType = MediaType.TEXT_HTML; // HTML 파일 MIME 타입
+            }
+
+            return ResponseEntity.ok()
+                    .contentType(mediaType)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + encodedFileName + "\"")
+                    .body(new FileSystemResource(file));
+
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+
 
     // 확장자 추출 메서드
     private String getFileExtension(String fileName) {
