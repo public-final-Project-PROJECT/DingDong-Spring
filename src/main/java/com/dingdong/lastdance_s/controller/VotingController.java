@@ -6,6 +6,7 @@ import com.dingdong.lastdance_s.entity.voting.VotingRecord;
 import com.dingdong.lastdance_s.model.Students;
 import com.dingdong.lastdance_s.repository.voting.VotingRecordRepository;
 import com.dingdong.lastdance_s.service.VotingService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -115,11 +116,11 @@ public class VotingController {
     public ResponseEntity<Object> findUserVoting(
             @RequestBody Map<String, Object> voteData
     ){
-        System.out.println("학생 투표 정보 조회 넘어옴");
+
         int votingId = (int) voteData.get("votingId");
         int studentId = (int) voteData.get("studentId");
 
-        // 1. 이 투표 고유 id 로 이 투표에 투표한 유저 id 와 항목 정보를 불러온다.
+        // 해당 voting 에 있는 투표 기록 가져온다.
         List<VotingRecord> result = votingRecordRepository.findByVotingId(votingId);
 
         if(result == null){
@@ -148,16 +149,15 @@ public class VotingController {
             @RequestBody Map<String, Object> voteData
     ){
         // 투표를 한 유저의 그 투표의 id 를 보낸거니까 해당 투표의 투표 유저들만 보내주면 됌
-        System.out.println("voteData :: " + voteData);
+        System.out.println("유저 항목 투표 조회 voteData :: " + voteData);
 
          int votingId = (int) voteData.get("votingId");
-         int classId = (int) voteData.get("classId");
 
         // 1. 해당 투표의 모든 유저의 투표 정보를 가져온다.
         List<VotingRecord> result = votingRecordRepository.findByVotingId(votingId);
         System.out.println("resut ++ " + result);
 
-        List<Integer> userVoteData = new ArrayList<>();
+        // List<Integer> userVoteData = new ArrayList<>();
 
 //        for(VotingRecord user : result){
 //            userVoteData.add(user.getStudentId());
@@ -204,4 +204,38 @@ public class VotingController {
         }
         return ResponseEntity.status(500).body(null);
     }
+
+    // 투표 삭제
+    @Transactional
+    @PostMapping("deleteVoting")
+    public ResponseEntity<Object> deleteVoting(
+            @RequestBody Map<String, Object> voteData
+    ){
+        System.out.println("투표 삭제 넘어옴: " + voteData);
+        int votingId = (int) voteData.get("votingId");
+        boolean result = votingService.deleteVoting(votingId);
+
+        System.out.println("result : " + result);
+        if(result){
+            return ResponseEntity.ok("투표 삭제 성공.");
+        }
+        return ResponseEntity.status(500).body(null);
+    }
+
+//    @PostMapping("findByVotingIdForStdInfoTest")
+//    public ResponseEntity<Object> findByVotingIdForStdInfoTest(
+//            @RequestBody Map<String, Object> voteData
+//    ){
+//        System.out.println("test 메소드 넘어옴");
+//        int votingId = (int) voteData.get("votingId");
+//        List<Object> resultList = votingService.findByVotingIdForStdInfoTest(votingId);
+//
+//        System.out.println("result : " + resultList);
+//        if(resultList.size() != 0){
+//            return ResponseEntity.ok("투표 삭제 성공.");
+//        }
+//        return ResponseEntity.status(500).body(null);
+//    }
+
+
 }

@@ -10,10 +10,13 @@ import com.dingdong.lastdance_s.repository.voting.VotingContentsRepository;
 import com.dingdong.lastdance_s.repository.voting.VotingRecordRepository;
 import com.dingdong.lastdance_s.repository.voting.VotingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -34,34 +37,46 @@ public class  VotingService {
 
     // 투표 insert
     public Voting saveVoting(Map<String, Object> voteData) {
-
         Voting voting = new Voting();
         voting.setClassId((Integer) voteData.get("classId")); // 학급 id
         voting.setVotingName(voteData.get("votingName").toString()); // 제목
         voting.setVotingDetail(voteData.get("detail").toString()); // 설명
-        // String votingEndObj = (String)voteData.get("votingEnd");
 
+
+        String votingEndStr = (String) voteData.get("votingEnd");
         LocalDateTime date = null;
 
-        if (voteData.get("votingEnd") != null) {
-            System.out.println("왜 마감시간 안들어가 ? :: " + voteData.get("votingEnd"));
-            String cleanedDate = (String) voteData.get("votingEnd");
-            cleanedDate = cleanedDate.replace(".000", " ");
-          // voting.setVotingEnd((LocalDateTime) votingEndObj);
-//            String votingEnd = (String)voteData.get("cleanedDate");
+        if (votingEndStr != null && !votingEndStr.equals("no")) {
+            try {
 
-                date = LocalDate.parse(cleanedDate).atStartOfDay();
+                String cleanedDate = votingEndStr.replace(".000", "");
+
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+
+                date = LocalDateTime.parse(cleanedDate, formatter);
+
+
                 voting.setVotingEnd(date);
 
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format: " + votingEndStr);
+
+            }
         }
 
         voting.setCreatedAt(LocalDateTime.now()); // 생성일
         voting.setVote(true); // 투표 진행 여부
         voting.setAnonymousVote((Boolean) voteData.get("anonymousVote")); // 비밀 투표 여부
         voting.setDoubleVote((Boolean) voteData.get("doubleVote")); // 중복 투표 가능 여부
+
         Voting result = votingRepository.save(voting);
         return result;
     }
+
+
+
 
     // 투표 항목 insert
     public Boolean  saveVotingContents(Map<String, Object> voteData, Integer integer) {
@@ -148,6 +163,24 @@ public class  VotingService {
         }
         return Collections.emptyList();
     }
+
+    public boolean deleteVoting(int votingId) {
+        try {
+            // int id = votingId;
+            votingRecordRepository.deleteByVotingId(votingId);
+            votingContentsRepository.deleteByVotingId(votingId);
+            votingRepository.deleteById(votingId);
+            return true;
+        } catch (EmptyResultDataAccessException e) {
+            System.err.println("해당 투표 id 를 찾지 못함 : " + votingId);
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
 
 //    @Transactional
 //    public void updateExpiredVotings() {
