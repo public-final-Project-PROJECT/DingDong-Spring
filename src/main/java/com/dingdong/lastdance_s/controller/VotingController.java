@@ -58,15 +58,24 @@ public class VotingController {
     @PostMapping("findVoting")
     public ResponseEntity<Object> findVoting(
             @RequestBody Map<String, Object> voteData){
-        int classId = (int) voteData.get("classId");
         System.out.println("투표 list 요청 넘어옴");
 
-        List<Voting> result = votingService.findByClassId(classId);
-        if(result != null){
-            System.out.println("투표 정보 : " + result);
-            return ResponseEntity.ok(result);
+        try {
+            int classId = (int) voteData.get("classId");
+            System.out.println("classId: " + classId);
+
+            List<Voting> result = votingService.findByClassId(classId);
+            if (result != null && !result.isEmpty()) {
+                System.out.println("투표 정보: " + result);
+                return ResponseEntity.ok(result); // 성공 응답
+            } else {
+                System.out.println("투표 정보 없음");
+                return ResponseEntity.status(404).body("No voting data found");
+            }
+        } catch (Exception e) {
+            System.out.println("에러 발생: " + e.getMessage());
+            return ResponseEntity.status(500).body("Error occurred");
         }
-        return ResponseEntity.status(500).body(null);
     }
 
     // 투표들의 항목 조회 요청

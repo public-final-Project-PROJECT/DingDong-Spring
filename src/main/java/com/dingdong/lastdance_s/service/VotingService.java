@@ -44,10 +44,13 @@ public class  VotingService {
         LocalDateTime date = null;
 
         if (voteData.get("votingEnd") != null) {
+            System.out.println("왜 마감시간 안들어가 ? :: " + voteData.get("votingEnd"));
+            String cleanedDate = (String) voteData.get("votingEnd");
+            cleanedDate = cleanedDate.replace(".000", " ");
           // voting.setVotingEnd((LocalDateTime) votingEndObj);
-            String votingEnd = (String)voteData.get("votingEnd");
+//            String votingEnd = (String)voteData.get("cleanedDate");
 
-                date = LocalDate.parse(votingEnd).atStartOfDay();
+                date = LocalDate.parse(cleanedDate).atStartOfDay();
                 voting.setVotingEnd(date);
 
         }
