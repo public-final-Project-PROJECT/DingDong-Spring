@@ -51,6 +51,7 @@ public class SeatController {
     @PostMapping("/saveSeat")
     public ResponseEntity<String> updateSeats(@RequestBody Map<String, List<Map<String, Object>>> payload) {
         try {
+            System.out.println("좌석 저장하러 넘어옴");
             List<Map<String, Object>> seatList = payload.get("studentList");
             if (seatList == null) {
                 return ResponseEntity.badRequest().body("studentList null 로 넘아옴");

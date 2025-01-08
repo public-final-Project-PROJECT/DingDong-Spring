@@ -12,4 +12,6 @@ public interface VotingRecordRepository extends JpaRepository<VotingRecord, Inte
     List<VotingRecord> findByStudentId(int studentId);
 
     List<VotingRecord> findByVotingId(int votingId);
+
+    void deleteByVotingId(int votingId);
 }
