@@ -16,7 +16,6 @@ import java.util.List;
 @RequestMapping("/api/notice")
 public class NoticeController {
 
-    //int classId = 1;
 
     @Autowired
     private NoticeService noticeService;
@@ -26,6 +25,7 @@ public class NoticeController {
 
     @GetMapping("/view")
     public ResponseEntity<List<Notice>> view(@RequestParam("classId") int classId) {
+     //   System.out.println("classId는 = " + classId);
         List<Notice> list = noticeService.getNoticesByClassId(classId);
 
 //        for (Notice notice : list) {
@@ -121,6 +121,7 @@ public class NoticeController {
             return ResponseEntity.status(500).body("서버 오류, 삭제에 실패했습니다.");
         }
     }
+
 }
 
 
