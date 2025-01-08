@@ -18,7 +18,19 @@ public class CalenderController {
     @Autowired
     CalenderService calenderService;
 
-    @PostMapping("/list")
+    @GetMapping("/list")
+    public ResponseEntity<Object> CalenderList() {
+
+
+
+        // 서비스에서 해당 id로 데이터를 가져옴
+        List<Calender> response = calenderService.GetCalendar();
+
+        System.out.println(response);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/listselect")
     public ResponseEntity<Object> CalenderList(@RequestBody Map<String, Integer> requestBody) {
         // 요청 본문에서 input 값 가져오기
         int calenderId = requestBody.get("input");
@@ -26,8 +38,20 @@ public class CalenderController {
         // 서비스에서 해당 id로 데이터를 가져옴
         Calender response = calenderService.CalenderList(calenderId);
 
-        System.out.println(response);
+
         return ResponseEntity.ok(response);
     }
+
+
+    @PostMapping("/update")
+    public ResponseEntity<Object> CalendarUpdate(@RequestBody List<Calender> requestBody) {
+        System.out.println(requestBody);
+        List<Calender> response = calenderService.CalendarUpdate(requestBody);
+
+
+        return ResponseEntity.ok(response);
+    }
+
+
 
 }
