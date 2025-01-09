@@ -1,11 +1,7 @@
 package com.dingdong.lastdance_s.controller;
-
 import com.dingdong.lastdance_s.entity.Seat;
-import com.dingdong.lastdance_s.entity.User;
 import com.dingdong.lastdance_s.model.Students;
 import com.dingdong.lastdance_s.service.SeatService;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +21,9 @@ public class SeatController {
     @PostMapping("/findAllSeat")
     public ResponseEntity<Object> findAllSeat(@RequestBody Map<String, Object> params){
 
+
         int classId = Integer.parseInt(params.get("classId").toString());
+
         List<Seat> seatStudents = seatService.findAll(classId);
         if(seatStudents.size()>0){
             return ResponseEntity.ok(seatStudents);
@@ -33,9 +31,10 @@ public class SeatController {
         return ResponseEntity.status(404).body(null);
     }
 
-    // studentId 로 학생 이름 조회
+    // classId 로 학생 이름 조회
     @PostMapping("/findName")
     public ResponseEntity<Object> findName(@RequestBody Map<String, Object> params){
+
 
         int classId = Integer.parseInt(params.get("classId").toString());
         List<Students> nameList = seatService.findName(classId);
@@ -57,6 +56,7 @@ public class SeatController {
                 return ResponseEntity.badRequest().body("studentList null 로 넘아옴");
             }
             seatService.updateSeats(seatList);
+            System.out.println("저장 성공함 ㅃㅃ!!!!!!!!");
             return ResponseEntity.ok("저장 성공 ");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("좌석 저장 실패 : " + e.getMessage());

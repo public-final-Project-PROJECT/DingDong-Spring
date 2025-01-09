@@ -84,7 +84,7 @@ public class  VotingService {
         List<String> contents = (List<String>) voteData.get("contents"); // 항목
 
         for (String content : contents) {
-            System.out.println("Service 의 contents :: " + content);
+
             // 매변 새로운 객체를 생성
             VotingContents votingContents = new VotingContents();
             votingContents.setVotingId(integer);
@@ -98,7 +98,7 @@ public class  VotingService {
     public List<Voting> findByClassId(int classId) {
 
         List<Voting> result = votingRepository.findByClassId(classId);
-        System.out.println("트표 조회 중 서비스");
+
 
         if (result.size() > 0) {
             return result;
@@ -120,7 +120,6 @@ public class  VotingService {
         int votingId = (int)voteData.get("votingId");
         int studentId = (int)voteData.get("studentId");
         int contentsId = (int)voteData.get("contentsId");
-        System.out.println(" 잘넘어오나아아아: " + studentId+votingId+contentsId );
 
         VotingRecord vr = new VotingRecord();
         vr.setVotingId(votingId);
@@ -128,7 +127,7 @@ public class  VotingService {
         vr.setContentsId(contentsId);
 
         VotingRecord result = votingRecordRepository.save(vr);
-        System.out.println("저장 결과 ! : " + result);
+
        if(result != null) {
            return true;
        }
