@@ -10,6 +10,7 @@ public class Calender {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "calendar_id")
     private int calendarId;
 
     @Column(name = "title", nullable = false, length = 255)
