@@ -122,4 +122,8 @@ public class NoticeService {
     public void updateNotice(Notice existingNotice) {
         noticeRepository.save(existingNotice);
     }
+
+    public List<Notice> getNoticesByClassIdAndCategory(int classId, Notice.NoticeCategory noticeCategory) {
+         return noticeRepository.findByClassIdAndNoticeCategory(classId, noticeCategory);
+    }
 }

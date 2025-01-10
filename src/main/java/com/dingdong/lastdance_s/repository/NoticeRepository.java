@@ -16,4 +16,7 @@ public interface NoticeRepository extends JpaRepository<Notice, Integer> {
 
     @Query("SELECT n FROM  Notice n WHERE n.noticeId = :noticeId")
     List<Notice> findAllByNoticeId(@Param("noticeId") Integer noticeId);
+
+    @Query("SELECT n FROM Notice n WHERE n.classId = :classId AND  n.noticeCategory = :noticeCategory")
+    List<Notice> findByClassIdAndNoticeCategory(int classId, Notice.NoticeCategory noticeCategory);
 }

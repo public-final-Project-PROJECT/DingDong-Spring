@@ -23,17 +23,29 @@ public class NoticeController {
     private String uploadPath = "C:/uploads";  // 실제 경로로 수정하세요
 
 
-    @GetMapping("/view")
-    public ResponseEntity<List<Notice>> view(@RequestParam("classId") int classId) {
-     //   System.out.println("classId는 = " + classId);
-        List<Notice> list = noticeService.getNoticesByClassId(classId);
+//    @GetMapping("/view")
+//    public ResponseEntity<List<Notice>> view(@RequestParam("classId") int classId) {
+//        List<Notice> list = noticeService.getNoticesByClassId(classId);
+//        return ResponseEntity.ok(list);
+//    }
 
-//        for (Notice notice : list) {
-//            System.out.println(notice);
-//        }
+    @GetMapping("/view")
+    public ResponseEntity<List<Notice>> view(
+            @RequestParam("classId") int classId,
+            @RequestParam(value = "noticeCategory", required = false) Notice.NoticeCategory noticeCategory) {
+
+        List<Notice> list;
+        if (noticeCategory != null) {
+            // Enum 타입으로 카테고리를 필터링
+            list = noticeService.getNoticesByClassIdAndCategory(classId, noticeCategory);
+        } else {
+            // 카테고리가 없는 경우 전체 데이터를 가져옴
+            list = noticeService.getNoticesByClassId(classId);
+        }
 
         return ResponseEntity.ok(list);
     }
+
 
     @GetMapping("/detail/{noticeId}")
     public ResponseEntity<List<Notice>> viewDetail(@PathVariable int noticeId) {
@@ -75,6 +87,7 @@ public class NoticeController {
             @RequestParam(value = "noticeImg", required = false) MultipartFile noticeImg,
             @RequestParam(value = "noticeFile", required = false) MultipartFile noticeFile
     ) {
+        System.out.println("오");
         try {
             // 먼저 noticeId에 해당하는 공지사항을 DB에서 찾음
             Notice existingNotice = noticeService.getNoticeById(noticeId);
@@ -94,6 +107,14 @@ public class NoticeController {
             if (noticeFile != null && !noticeFile.isEmpty()) {
                 String filePath = noticeService.saveFile(noticeFile);  // saveFile 호출
                 existingNotice.setNoticeFile(filePath);
+            }else {
+                // noticeFile이 null일 때 기존 파일 경로 유지
+                // 기존 notice 객체의 noticeFile 속성을 확인하여 경로 가져오기
+                String currentFilePath = existingNotice.getNoticeFile();
+                if (currentFilePath != null && !currentFilePath.isEmpty()) {
+                    // 기존 경로를 유지하도록 설정
+                    existingNotice.setNoticeFile(currentFilePath);
+                }
             }
 
             // 공지사항 업데이트

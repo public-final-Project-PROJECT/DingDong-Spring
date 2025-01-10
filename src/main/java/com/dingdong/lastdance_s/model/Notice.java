@@ -149,8 +149,18 @@ public class Notice {
     public enum NoticeCategory {
         가정통신문,
         알림장,
-        학교생활
+        학교생활;
+
+        public static NoticeCategory fromString(String value) {
+            for (NoticeCategory category : NoticeCategory.values()) {
+                if (category.name().equals(value)) {
+                    return category;
+                }
+            }
+            throw new IllegalArgumentException("Unknown category: " + value);
+        }
     }
+
 }
 
 
