@@ -48,7 +48,7 @@ public class Class {
             classCreated = Timestamp.valueOf(LocalDateTime.now());
         }
         LocalDateTime createdDate = classCreated.toLocalDateTime();
-        int expireYear = createdDate.getMonthValue() > 3 ? createdDate.getYear() + 2 : createdDate.getYear() + 1;
+        int expireYear = createdDate.getYear() + 2;
         LocalDateTime expireDate = LocalDateTime.of(expireYear, 3, 1, 0, 0);
         this.classExpire = Timestamp.valueOf(expireDate);
     }

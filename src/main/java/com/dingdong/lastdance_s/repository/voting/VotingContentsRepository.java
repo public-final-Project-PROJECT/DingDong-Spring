@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface VotingContentsRepository extends JpaRepository<VotingContents, Integer> {
     List<VotingContents> findByVotingId(int votingId);
+
+    void deleteByVotingId(int votingId);
 }

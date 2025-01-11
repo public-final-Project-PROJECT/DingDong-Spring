@@ -75,8 +75,8 @@ public class ClassService {
         return classRepository.findBySchoolName(schoolName);
     }
 
-    public List<Class> getClassesByGradeAndClassNo(int grade, int classNo) {
-        return classRepository.findByGradeAndClassNo(grade, classNo);
+    public List<Class> getClassesByGradeAndClassNoAndTeacherId(int grade, int classNo, int teacherId) {
+        return classRepository.findByGradeAndClassNoAndUserId(grade, classNo, teacherId);
     }
 
     public List<Class> getClassesByTeacherId(int teacherId) {

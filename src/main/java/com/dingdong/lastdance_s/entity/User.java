@@ -26,5 +26,8 @@ public class User {
 
     @Column(name = "school_name")
     private String schoolName;
+
+    @Column(name = "latest_class_id")
+    private Integer latestClassId;
 }
 

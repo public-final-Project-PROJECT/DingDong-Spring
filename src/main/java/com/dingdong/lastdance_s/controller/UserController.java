@@ -55,6 +55,20 @@ public class UserController {
         return ResponseEntity.ok("User info saved successfully!");
     }
 
+    @PostMapping("/add/class")
+    public ResponseEntity<String> handleAddClass(@RequestBody Map<String, Object> userInfo) {
+        String email = (String) userInfo.get("email");
+        Integer latestClassId = (Integer) userInfo.get("latestClassId");
+
+        User user = new User();
+        user.setEmail(email);
+        user.setLatestClassId(latestClassId);
+
+        userService.saveOrUpdateUser(user);
+
+        return ResponseEntity.ok("User info saved successfully!");
+    }
+
     @GetMapping("/get/school/{email}")
     public ResponseEntity<?> getSchoolName(@PathVariable String email)
     {
@@ -68,7 +82,18 @@ public class UserController {
         return ResponseEntity.ok(Map.of());
     }
 
+    @GetMapping("/get/class/{email}")
+    public ResponseEntity<?> getLatestClassId(@PathVariable String email)
+    {
+        Optional<Integer> latestClassId = userService.getLatestClassIdByEmail(email);
 
+        if (latestClassId.isPresent())
+        {
+            return ResponseEntity.ok(Map.of("latestClassId", latestClassId.get()));
+        }
+
+        return ResponseEntity.ok(Map.of());
+    }
 
     @DeleteMapping("/withdraw/{email}")
     public ResponseEntity<?> withdraw(@PathVariable String email) {

@@ -27,33 +27,21 @@ public class ClassController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createClass(@RequestBody ClassRequest request)
-    {
-        int userId = userService.findUserIdByEmail(request.getEmail());
-        if (userId == 0)
-        {
+    public ResponseEntity<String> createClass(@RequestBody ClassRequest request) {
+        Integer userId = userService.findUserIdByEmail(request.getEmail());
+        if (userId == 0) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is not authenticated.");
         }
 
         int classCount = classService.getClassCountByTeacherId(userId);
-        if (classCount >= 2)
-        {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body("You can only create up to 2 classes.");
+        if (classCount >= 2) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You can only create up to 2 classes.");
         }
 
         Timestamp createTime = new Timestamp(System.currentTimeMillis());
-        String response = classService.createClass(
-                request.getEmail(),
-                request.getSchoolName(),
-                request.getGrade(),
-                request.getClassNo(),
-                request.getClassNickname(),
-                createTime
-        );
+        String response = classService.createClass(request.getEmail(), request.getSchoolName(), request.getGrade(), request.getClassNo(), request.getClassNickname(), createTime);
 
-        if (response.startsWith("Error:"))
-        {
+        if (response.startsWith("Error:")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
@@ -68,9 +56,7 @@ public class ClassController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Class> getClassById(@PathVariable int id) {
-        return classService.getClassById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return classService.getClassById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/school/{schoolName}")
@@ -79,9 +65,9 @@ public class ClassController {
         return ResponseEntity.ok(classes);
     }
 
-    @GetMapping("/grade/{grade}/class/{classNo}")
-    public ResponseEntity<List<Class>> getClassesByGradeAndClassNo(@PathVariable int grade, @PathVariable int classNo) {
-        List<Class> classes = classService.getClassesByGradeAndClassNo(grade, classNo);
+    @GetMapping("/grade/{grade}/class/{classNo}/teacher/{teacherId}")
+    public ResponseEntity<List<Class>> getClassesByGradeAndClassNo(@PathVariable int grade, @PathVariable int classNo, @PathVariable int teacherId) {
+        List<Class> classes = classService.getClassesByGradeAndClassNoAndTeacherId(grade, classNo, teacherId);
         return ResponseEntity.ok(classes);
     }
 
@@ -111,10 +97,7 @@ public class ClassController {
     }
 
     @PatchMapping("/update/{teacherId}/{classId}")
-    public ResponseEntity<String> updateClassName(
-            @PathVariable int teacherId,
-            @PathVariable int classId,
-            @RequestBody ClassRequest request) {
+    public ResponseEntity<String> updateClassName(@PathVariable int teacherId, @PathVariable int classId, @RequestBody ClassRequest request) {
         boolean isUpdated = classService.updateClassName(teacherId, classId, request.getClassNickname());
         if (isUpdated) {
             return ResponseEntity.ok("Class name updated successfully.");

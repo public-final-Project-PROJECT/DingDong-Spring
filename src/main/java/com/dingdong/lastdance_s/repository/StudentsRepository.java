@@ -32,5 +32,6 @@ public interface StudentsRepository  extends JpaRepository<Students, Integer> {
             "FROM Students s JOIN Class c ON s.classId = c.classId " +
             "WHERE s.studentId = :studentId ORDER BY s.studentName ASC ")
     StudentsDTO findStudentsAndClassByStudentId(@Param("studentId") int studentId);
+    List<Students> findByClassId(int classId);
 }
 
