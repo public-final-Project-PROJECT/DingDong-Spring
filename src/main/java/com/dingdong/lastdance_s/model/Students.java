@@ -44,14 +44,16 @@ public class Students {
     @Column(name = "memo")
     private String memo;
 
+    @Column(name = "student_no")
+    private int studentNo;
+
     @Column(name = "class_id")
     private int classId;
-
 
     public Students() {
     }
 
-    public Students(int studentId, String studentName, String studentImg, String studentPhone, GenderCategory studentGender, String studentEtc, Date studentBirth, String studentAddress, String parentsName, String parentsPhone, String memo, int classId) {
+    public Students(int studentId, String studentName, String studentImg, String studentPhone, GenderCategory studentGender, String studentEtc, Date studentBirth, String studentAddress, String parentsName, String parentsPhone, String memo, int studentNo, int classId) {
         this.studentId = studentId;
         this.studentName = studentName;
         this.studentImg = studentImg;
@@ -63,6 +65,7 @@ public class Students {
         this.parentsName = parentsName;
         this.parentsPhone = parentsPhone;
         this.memo = memo;
+        this.studentNo = studentNo;
         this.classId = classId;
     }
 
@@ -154,30 +157,20 @@ public class Students {
         this.memo = memo;
     }
 
+    public int getStudentNo() {
+        return studentNo;
+    }
+
+    public void setStudentNo(int studentNo) {
+        this.studentNo = studentNo;
+    }
+
     public int getClassId() {
         return classId;
     }
 
     public void setClassId(int classId) {
         this.classId = classId;
-    }
-
-    @Override
-    public String toString() {
-        return "Students{" +
-                "studentId=" + studentId +
-                ", studentName='" + studentName + '\'' +
-                ", studentImg='" + studentImg + '\'' +
-                ", studentPhone='" + studentPhone + '\'' +
-                ", studentGender=" + studentGender +
-                ", studentEtc='" + studentEtc + '\'' +
-                ", studentBirth=" + studentBirth +
-                ", studentAddress='" + studentAddress + '\'' +
-                ", parentsName='" + parentsName + '\'' +
-                ", parentsPhone='" + parentsPhone + '\'' +
-                ", memo='" + memo + '\'' +
-                ", classId=" + classId +
-                '}';
     }
 
     public enum GenderCategory {

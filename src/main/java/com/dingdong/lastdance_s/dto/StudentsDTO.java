@@ -20,11 +20,12 @@ public class StudentsDTO {
     private String schoolName;
     private int grade;
     private int classNo;
+    private int studentNo;
 
     public StudentsDTO() {
     }
 
-    public StudentsDTO(int studentId, String studentName, String studentImg, String studentPhone, Students.GenderCategory studentGender, String studentEtc, Date studentBirth, String studentAddress, String parentsName, String parentsPhone, String memo, int classId, String schoolName, int grade, int classNo) {
+    public StudentsDTO(int studentId, String studentName, String studentImg, String studentPhone, Students.GenderCategory studentGender, String studentEtc, Date studentBirth, String studentAddress, String parentsName, String parentsPhone, String memo, int classId, String schoolName, int grade, int classNo, int studentNo) {
         this.studentId = studentId;
         this.studentName = studentName;
         this.studentImg = studentImg;
@@ -40,6 +41,7 @@ public class StudentsDTO {
         this.schoolName = schoolName;
         this.grade = grade;
         this.classNo = classNo;
+        this.studentNo = studentNo;
     }
 
     public int getStudentId() {
@@ -162,6 +164,14 @@ public class StudentsDTO {
         this.classNo = classNo;
     }
 
+    public int getStudentNo() {
+        return studentNo;
+    }
+
+    public void setStudentNo(int studentNo) {
+        this.studentNo = studentNo;
+    }
+
     @Override
     public String toString() {
         return "StudentsDTO{" +
@@ -180,6 +190,7 @@ public class StudentsDTO {
                 ", schoolName='" + schoolName + '\'' +
                 ", grade=" + grade +
                 ", classNo=" + classNo +
+                ", studentNo=" + studentNo +
                 '}';
     }
 }
