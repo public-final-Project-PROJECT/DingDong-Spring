@@ -49,4 +49,18 @@ public class SeatService {
             seatRepository.updateSeatPosition(classId, studentId, rowId, columnId);
         }
     }
+
+    // 학생들 조회하기
+    public List<Students> findByClassId(int classId) {
+
+        List<Students> studentsList = studentsRepository.findByClassId(classId);
+        return studentsList;
+    }
+
+    // 좌석 저장
+    public List<Map<String, Object>> saveSeat(List<Map<String, Object>> newSeats) {
+        System.out.println("좌석 저장에 넘어온 newSeats :: " + newSeats);
+        // seatRepository.save(newSeats);
+        return newSeats;
+    }
 }

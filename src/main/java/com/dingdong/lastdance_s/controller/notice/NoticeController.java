@@ -34,6 +34,10 @@ public class NoticeController {
             @RequestParam("classId") int classId,
             @RequestParam(value = "noticeCategory", required = false) Notice.NoticeCategory noticeCategory) {
 
+        System.out.println("여기오나");
+
+        System.out.println("noticeCategory있나"+noticeCategory);
+        System.out.println("여기오나");
         List<Notice> list;
         if (noticeCategory != null) {
             // Enum 타입으로 카테고리를 필터링
@@ -71,6 +75,7 @@ public class NoticeController {
         try {
             noticeService.saveNotice(noticeTitle, noticeCategory, noticeContent, noticeImg, noticeFile,classId);
             return ResponseEntity.ok("공지사항이 등록되었습니다.");
+
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("공지사항 등록에 실패했습니다.");

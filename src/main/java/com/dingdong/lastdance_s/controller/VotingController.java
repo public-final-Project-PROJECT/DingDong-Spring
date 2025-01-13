@@ -161,6 +161,7 @@ public class VotingController {
     ){
 
         int classId = (int) voteData.get("classId");
+        System.out.println("학급 id :: " + classId );
         List<Students> studentsList = votingService.findByStudentsName(classId);
 
         if(studentsList.isEmpty()){
