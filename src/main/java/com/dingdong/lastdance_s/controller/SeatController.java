@@ -34,12 +34,13 @@ public class SeatController {
 
                 int row = 1; // 시작 행
                 int column = 1; // 시작 열
+
                 for (Students students : studentsList) {
                     Map<String, Object> seat = new HashMap<>();
                     seat.put("studentId", students.getStudentId());
                     seat.put("rowId", row);
                     seat.put("columnId", column);
-                    seat.put("classId", 2);
+                    seat.put("classId", students.getClassId());
                     newSeats.add(seat);
 
                     // 5열이 넘으면 다음 행으로 이동
@@ -51,7 +52,7 @@ public class SeatController {
                 }
                 System.out.println("생성된 좌석 데이터: " + newSeats);
 
-                List<Seat> newSeats1 = seatService.insertSeats(newSeats);
+                seatService.insertSeats(newSeats);
                 seatStudents = seatService.findAll(classId);
             }
 
@@ -73,6 +74,8 @@ public class SeatController {
         int classId = Integer.parseInt(params.get("classId").toString());
         List<Students> nameList = seatService.findName(classId);
 
+        nameList.sort(Comparator.comparingInt(Students::getStudentNo));
+
         if(nameList.size()>0){
             return ResponseEntity.ok(nameList);
         }
@@ -84,8 +87,10 @@ public class SeatController {
     @PostMapping("/saveSeat")
     public ResponseEntity<String> updateSeats(@RequestBody Map<String, List<Map<String, Object>>> payload) {
         try {
+            System.out.println("랜덤돌린 후 저장 :: " + payload.toString());
 
             List<Map<String, Object>> seatList = payload.get("studentList");
+
             if (seatList == null) {
                 return ResponseEntity.badRequest().body("studentList null 로 넘아옴");
             }
