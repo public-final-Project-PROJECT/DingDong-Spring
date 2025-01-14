@@ -17,7 +17,7 @@ public interface UserRepository extends JpaRepository<User, Integer>
     @Query("SELECT u.schoolName FROM User u WHERE u.email = :email")
     Optional<String> findSchoolNameByEmail(String email);
 
-    @Query("SELECT u.id FROM User u WHERE u.email = :email")
+    @Query("SELECT COALESCE(u.id, 0) FROM User u WHERE u.email = :email")
     Optional<Integer> findUserIdByEmail(@Param("email") String email);
 
     @Query("SELECT u.latestClassId FROM User u WHERE u.email = :email")
