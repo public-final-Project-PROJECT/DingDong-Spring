@@ -93,7 +93,7 @@ public class VotingController {
 
         boolean result = votingService.saveVotingRecord(voteData);
         if(result){
-            return ResponseEntity.ok(null);
+            return ResponseEntity.ok(result);
         }
         return ResponseEntity.status(500).body(null);
 
@@ -161,7 +161,6 @@ public class VotingController {
     ){
 
         int classId = (int) voteData.get("classId");
-        System.out.println("학급 id :: " + classId );
         List<Students> studentsList = votingService.findByStudentsName(classId);
 
         if(studentsList.isEmpty()){
@@ -204,20 +203,6 @@ public class VotingController {
         return ResponseEntity.status(500).body(null);
     }
 
-//    @PostMapping("findByVotingIdForStdInfoTest")
-//    public ResponseEntity<Object> findByVotingIdForStdInfoTest(
-//            @RequestBody Map<String, Object> voteData
-//    ){
-//        System.out.println("test 메소드 넘어옴");
-//        int votingId = (int) voteData.get("votingId");
-//        List<Object> resultList = votingService.findByVotingIdForStdInfoTest(votingId);
-//
-//        System.out.println("result : " + resultList);
-//        if(resultList.size() != 0){
-//            return ResponseEntity.ok("투표 삭제 성공.");
-//        }
-//        return ResponseEntity.status(500).body(null);
-//    }
 
 
 }
