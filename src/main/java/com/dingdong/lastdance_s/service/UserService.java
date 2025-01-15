@@ -62,12 +62,11 @@ public class UserService {
 
     public Integer findUserIdByEmail(String email)
     {
-        Optional<Integer> userIdOptional = userRepository.findUserIdByEmail(email);
-        return userIdOptional.orElse(null);
+        return userRepository.findUserIdByEmail(email).orElse(0);
     }
 
-    public Optional<Integer> getLatestClassIdByEmail(String email)
+    public Integer getLatestClassIdByEmail(String email)
     {
-        return userRepository.findLatestClassIdByEmail(email);
+        return userRepository.findLatestClassIdByEmail(email).orElse(0);
     }
 }

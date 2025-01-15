@@ -34,6 +34,9 @@ public class Seat {
         this.studentId = studentId;
     }
 
+    public Seat(int classId, int columnId, int rowId, int studentId) {
+    }
+
     public int getSeatId() {
         return SeatId;
     }

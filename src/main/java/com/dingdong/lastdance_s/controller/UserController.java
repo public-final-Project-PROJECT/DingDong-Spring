@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -83,16 +84,10 @@ public class UserController {
     }
 
     @GetMapping("/get/class/{email}")
-    public ResponseEntity<?> getLatestClassId(@PathVariable String email)
+    public Integer getLatestClassId(@PathVariable String email)
     {
-        Optional<Integer> latestClassId = userService.getLatestClassIdByEmail(email);
-
-        if (latestClassId.isPresent())
-        {
-            return ResponseEntity.ok(Map.of("latestClassId", latestClassId.get()));
-        }
-
-        return ResponseEntity.ok(Map.of());
+        Integer latestClassId = userService.getLatestClassIdByEmail(email);
+        return Objects.requireNonNullElse(latestClassId, 0);
     }
 
     @DeleteMapping("/withdraw/{email}")

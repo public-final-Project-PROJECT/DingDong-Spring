@@ -157,6 +157,7 @@ public class  VotingService {
     public List<Students> findByStudentsName(int classId) {
 
         List<Students> result = studentsRepository.findByClassId(classId);
+        System.out.println("학생 name 조회 결과 :: " + result);
         if (result.size() > 0) {
             return result;
         }
