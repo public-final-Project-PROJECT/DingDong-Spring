@@ -37,7 +37,7 @@ public class NoticeService {
         return noticeRepository.findAllByNoticeId(noticeId);
     }
 
-    public Notice saveNotice(String noticeTitle, Notice.NoticeCategory noticeCategory, String noticeContent,
+    public int saveNotice(String noticeTitle, Notice.NoticeCategory noticeCategory, String noticeContent,
                              MultipartFile noticeImg, MultipartFile noticeFile, int classId) throws IOException {
         Notice notice = new Notice();
         notice.setNoticeTitle(noticeTitle);
@@ -60,7 +60,9 @@ public class NoticeService {
             notice.setNoticeFile(filePath);
         }
 
-        return noticeRepository.save(notice);
+        Notice savedNotice = noticeRepository.save(notice);
+
+        return  savedNotice.getNoticeId();
     }
 
     public String saveFile(MultipartFile file) throws IOException {

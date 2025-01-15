@@ -90,6 +90,7 @@ public class UserController {
         return Objects.requireNonNullElse(latestClassId, 0);
     }
 
+
     @DeleteMapping("/withdraw/{email}")
     public ResponseEntity<?> withdraw(@PathVariable String email) {
         try {

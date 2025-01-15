@@ -10,7 +10,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/notice")
@@ -64,7 +66,7 @@ public class NoticeController {
 
 
     @PostMapping("/insert")
-    public ResponseEntity<String> insertNotice(
+    public ResponseEntity<Map<String, Object>> insertNotice(
             @RequestParam("noticeTitle") String noticeTitle,
             @RequestParam("noticeCategory") Notice.NoticeCategory noticeCategory,
             @RequestParam("noticeContent") String noticeContent,
@@ -73,12 +75,19 @@ public class NoticeController {
             @RequestParam("classId") int classId
     ) {
         try {
-            noticeService.saveNotice(noticeTitle, noticeCategory, noticeContent, noticeImg, noticeFile,classId);
-            return ResponseEntity.ok("공지사항이 등록되었습니다.");
+            int noticeId = noticeService.saveNotice(noticeTitle, noticeCategory, noticeContent, noticeImg, noticeFile, classId);
+
+            // Map 객체를 생성하여 메시지와 noticeId를 포함
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "공지사항이 등록되었습니다.");
+            response.put("noticeId", noticeId);
+
+            return ResponseEntity.ok(response);
 
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(500).body("공지사항 등록에 실패했습니다.");
+            // 오류 시 메시지 반환
+            return ResponseEntity.status(500).body(Map.of("message", "공지사항 등록에 실패했습니다."));
         }
     }
 
