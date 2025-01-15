@@ -46,7 +46,7 @@ public class NoticeService {
         notice.setClassId(classId);
 
 
-      //
+        //
         // 이미지 파일 저장
         if (noticeImg != null && !noticeImg.isEmpty()) {
             System.out.println("noticeImg" + noticeImg.getOriginalFilename()+noticeImg);
@@ -124,6 +124,6 @@ public class NoticeService {
     }
 
     public List<Notice> getNoticesByClassIdAndCategory(int classId, Notice.NoticeCategory noticeCategory) {
-         return noticeRepository.findByClassIdAndNoticeCategory(classId, noticeCategory);
+        return noticeRepository.findByClassIdAndNoticeCategory(classId, noticeCategory);
     }
 }
