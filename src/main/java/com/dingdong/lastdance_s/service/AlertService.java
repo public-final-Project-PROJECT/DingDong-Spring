@@ -6,6 +6,8 @@ import com.dingdong.lastdance_s.repository.AlertRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AlertService  {
 
@@ -23,5 +25,25 @@ public class AlertService  {
         alert.setClassId(alertDTO.getClassId());
         alertRepository.save(alert);
 
+    }
+
+    public List<Alert> findByClassId(int classId) {
+        List<Alert> AlertList = alertRepository.findByClassId(classId);
+
+        if (AlertList != null){
+            return AlertList;
+        }else {
+            return null;
+        }
+    }
+
+    public List<Alert> findByClassIOrStudentId(int classId, Integer studentId) {
+        List<Alert> AlertList = alertRepository.findByClassIdOrStudentId(classId,studentId);
+
+        if (AlertList != null){
+            return AlertList;
+        }else {
+            return null;
+        }
     }
 }
