@@ -47,6 +47,7 @@ public class NoticeController {
         } else {
             // 카테고리가 없는 경우 전체 데이터를 가져옴
             list = noticeService.getNoticesByClassId(classId);
+            System.out.println(list);
         }
 
         return ResponseEntity.ok(list);
@@ -77,7 +78,7 @@ public class NoticeController {
         try {
             int noticeId = noticeService.saveNotice(noticeTitle, noticeCategory, noticeContent, noticeImg, noticeFile, classId);
 
-            // Map 객체를 생성하여 메시지와 noticeId를 포함
+
             Map<String, Object> response = new HashMap<>();
             response.put("message", "공지사항이 등록되었습니다.");
             response.put("noticeId", noticeId);
@@ -86,7 +87,7 @@ public class NoticeController {
 
         } catch (Exception e) {
             e.printStackTrace();
-            // 오류 시 메시지 반환
+
             return ResponseEntity.status(500).body(Map.of("message", "공지사항 등록에 실패했습니다."));
         }
     }
@@ -103,35 +104,32 @@ public class NoticeController {
     ) {
         System.out.println("오");
         try {
-            // 먼저 noticeId에 해당하는 공지사항을 DB에서 찾음
+
             Notice existingNotice = noticeService.getNoticeById(noticeId);
 
-            // 수정할 값을 설정
             existingNotice.setNoticeTitle(noticeTitle);
             existingNotice.setNoticeCategory(noticeCategory);
             existingNotice.setNoticeContent(noticeContent);
 
-            // 이미지 파일 처리
+
             if (noticeImg != null && !noticeImg.isEmpty()) {
                 String imgPath = noticeService.saveFile(noticeImg);  // saveFile 호출
                 existingNotice.setNoticeImg(imgPath);
             }
 
-            // 파일 처리
             if (noticeFile != null && !noticeFile.isEmpty()) {
                 String filePath = noticeService.saveFile(noticeFile);  // saveFile 호출
                 existingNotice.setNoticeFile(filePath);
             }else {
-                // noticeFile이 null일 때 기존 파일 경로 유지
-                // 기존 notice 객체의 noticeFile 속성을 확인하여 경로 가져오기
+
                 String currentFilePath = existingNotice.getNoticeFile();
                 if (currentFilePath != null && !currentFilePath.isEmpty()) {
-                    // 기존 경로를 유지하도록 설정
+
                     existingNotice.setNoticeFile(currentFilePath);
                 }
             }
 
-            // 공지사항 업데이트
+
             noticeService.updateNotice(existingNotice);
 
             return ResponseEntity.ok("공지사항이 수정되었습니다.");
@@ -144,7 +142,7 @@ public class NoticeController {
     @PostMapping("/delete/{noticeId}")
     public ResponseEntity<Object> delete(@PathVariable("noticeId") int noticeId) {
         try {
-            // 서비스에서 삭제 메서드 호출
+
             boolean isDeleted = noticeService.deleteNotice(noticeId);
 
             if (isDeleted) {

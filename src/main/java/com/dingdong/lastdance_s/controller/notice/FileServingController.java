@@ -50,29 +50,29 @@ public class FileServingController {
             if (fileExtension.equals("pdf")) {
                 Resource resource = new FileSystemResource(file);
                 return ResponseEntity.ok()
-                        .contentType(MediaType.APPLICATION_PDF) // PDF MIME 타입 설정
-                        .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + encodedFileName + "\"") // 브라우저에서 바로 보기
+                        .contentType(MediaType.APPLICATION_PDF)
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + encodedFileName + "\"") 
                         .body(resource);
             }
 
-            // 2. 텍스트 파일 (.txt) 처리
+
             if (fileExtension.equals("txt")) {
                 Resource resource = new FileSystemResource(file);
                 return ResponseEntity.ok()
-                        .contentType(MediaType.TEXT_PLAIN) // 텍스트 파일 MIME 타입 설정
-                        .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + encodedFileName + "\"") // 브라우저에서 바로 보기
+                        .contentType(MediaType.TEXT_PLAIN)
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + encodedFileName + "\"")
                         .body(resource);
             }
 
 
-            // 이미지 파일이면 이미지로 처리
+
             if (fileExtension.equals("jpg") || fileExtension.equals("jpeg") || fileExtension.equals("png") || fileExtension.equals("gif") || fileExtension.equals("WebP") || fileExtension.equals("bmp") || fileExtension.equals("tif") || fileExtension.equals("tiff")  ||fileExtension.equals("SVG") )  {
                 Resource resource = new FileSystemResource(file);
                 return ResponseEntity.ok()
                         .contentType(MediaType.IMAGE_JPEG) // 필요에 따라 다른 이미지 타입을 설정
                         .body(resource);
             } else {
-                // 일반 파일이면 다운로드 처리
+
                 Resource resource = new FileSystemResource(file);
                 return ResponseEntity.ok()
                         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + encodedFileName + "\"") // 다운로드용 헤더
@@ -83,7 +83,7 @@ public class FileServingController {
         }
     }
 
-    @GetMapping("/download/uploads/{fileName}") // URL 매핑 변경
+    @GetMapping("/download/uploads/{fileName}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
         try {
             File file = new File(uploadPath + "/" + fileName);
