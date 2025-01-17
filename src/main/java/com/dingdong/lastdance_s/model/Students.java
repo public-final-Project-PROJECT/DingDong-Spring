@@ -1,9 +1,13 @@
 package com.dingdong.lastdance_s.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Date;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "students")
 public class Students {
@@ -69,115 +73,9 @@ public class Students {
         this.classId = classId;
     }
 
-    public int getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(int studentId) {
-        this.studentId = studentId;
-    }
-
-    public String getStudentName() {
-        return studentName;
-    }
-
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
-    }
-
-    public String getStudentImg() {
-        return studentImg;
-    }
-
-    public void setStudentImg(String studentImg) {
-        this.studentImg = studentImg;
-    }
-
-    public String getStudentPhone() {
-        return studentPhone;
-    }
-
-    public void setStudentPhone(String studentPhone) {
-        this.studentPhone = studentPhone;
-    }
-
-    public GenderCategory getStudentGender() {
-        return studentGender;
-    }
-
-    public void setStudentGender(GenderCategory studentGender) {
-        this.studentGender = studentGender;
-    }
-
-    public String getStudentEtc() {
-        return studentEtc;
-    }
-
-    public void setStudentEtc(String studentEtc) {
-        this.studentEtc = studentEtc;
-    }
-
-    public Date getStudentBirth() {
-        return studentBirth;
-    }
-
-    public void setStudentBirth(Date studentBirth) {
-        this.studentBirth = studentBirth;
-    }
-
-    public String getStudentAddress() {
-        return studentAddress;
-    }
-
-    public void setStudentAddress(String studentAddress) {
-        this.studentAddress = studentAddress;
-    }
-
-    public String getParentsName() {
-        return parentsName;
-    }
-
-    public void setParentsName(String parentsName) {
-        this.parentsName = parentsName;
-    }
-
-    public String getParentsPhone() {
-        return parentsPhone;
-    }
-
-    public void setParentsPhone(String parentsPhone) {
-        this.parentsPhone = parentsPhone;
-    }
-
-    public String getMemo() {
-        return memo;
-    }
-
-    public void setMemo(String memo) {
-        this.memo = memo;
-    }
-
-    public int getStudentNo() {
-        return studentNo;
-    }
-
-    public void setStudentNo(int studentNo) {
-        this.studentNo = studentNo;
-    }
-
-    public int getClassId() {
-        return classId;
-    }
-
-    public void setClassId(int classId) {
-        this.classId = classId;
-    }
-
     public enum GenderCategory {
         남,
         여
     }
-
-
 }
 

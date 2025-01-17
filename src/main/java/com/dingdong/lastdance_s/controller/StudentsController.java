@@ -23,7 +23,7 @@ public class StudentsController {
 
     @GetMapping("/view")
     public ResponseEntity<List<Students>> view(@RequestParam("classId") int classId) {
-        List<Students> list =  studentsService.getStudentsByClassId(classId);
+        List<Students> list = studentsService.getStudentsByClassId(classId);
 //      for (Students students : list) {
 //          System.out.println(students);
 //      }
@@ -34,7 +34,7 @@ public class StudentsController {
     @GetMapping("/viewClass")
     public ResponseEntity<List<StudentsDTO>> viewClass(@RequestParam("classId") int classId) {
 
-        List<StudentsDTO> list =  studentsService.getStudentsByClass(classId);
+        List<StudentsDTO> list = studentsService.getStudentsByClass(classId);
         for (StudentsDTO students : list) {
             System.out.println(students);
         }
@@ -43,11 +43,10 @@ public class StudentsController {
     }
 
     @GetMapping("viewClass/{studentId}")
-    public  ResponseEntity<StudentsDTO> viewClassId
-            (@PathVariable("studentId") int studentId) {
+    public ResponseEntity<StudentsDTO> viewClassId(@PathVariable("studentId") int studentId) {
 
 
-        StudentsDTO list =  studentsService.getStudentsAndClassByStudentId(studentId);
+        StudentsDTO list = studentsService.getStudentsAndClassByStudentId(studentId);
         System.out.println(list);
 
         return ResponseEntity.ok(list);
@@ -55,55 +54,48 @@ public class StudentsController {
 
 
     @GetMapping("view/{studentId}")
-    public  ResponseEntity<List<Students>> viewDe
-            (@PathVariable("studentId") int studentId) {
+    public ResponseEntity<List<Students>> viewDe(@PathVariable("studentId") int studentId) {
 
-        List<Students> list =  studentsService.getStudentsByStudentId(studentId);
+        List<Students> list = studentsService.getStudentsByStudentId(studentId);
 
         return ResponseEntity.ok(list);
     }
 
     @PostMapping("/updateMemo/{studentId}")
-    public ResponseEntity<String> updateMemo(
-            @PathVariable int studentId,
-            @RequestBody String memo) {
+    public ResponseEntity<String> updateMemo(@PathVariable int studentId, @RequestBody String memo) {
 
-        System.out.println("meno"+ memo);
+        System.out.println("meno" + memo);
 
         try {
             studentsService.updateMemo(studentId, memo);
             return ResponseEntity.ok("메모 업데이트 성공");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("메모 업데이트 실패: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("메모 업데이트 실패: " + e.getMessage());
         }
 
 
     }
 
+    @PostMapping("/add")
+    public ResponseEntity<String> addStudent(@RequestParam("studentNo") int studentNo, @RequestParam("studentName") String studentName, @RequestParam("classId") int classId) {
+        try {
+            studentsService.addStudent(studentNo, studentName, classId);
+            return ResponseEntity.ok("");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
+
     @PostMapping("/register/{studentId}")
-    public ResponseEntity<String> registStudent(
-            @PathVariable int studentId,
-            @RequestParam("studentName") String studentName,
-            @RequestParam("studentBirth") String studentBirth,
-            @RequestParam("studentPhone") String studentPhone,
-            @RequestParam("studentAddress") String studentAddress,
-            @RequestParam("studentEtc") String studentEtc,
-            @RequestParam("parentsName") String parentsName,
-            @RequestParam("parentsPhone") String parentsPhone,
-            @RequestParam("studentGender") String studentGender,
-            @RequestParam(value = "studentImg", required = false) MultipartFile studentImg) {
+    public ResponseEntity<String> updateStudent(@PathVariable int studentId, @RequestParam("studentBirth") String studentBirth, @RequestParam("studentPhone") String studentPhone, @RequestParam("studentAddress") String studentAddress, @RequestParam("studentEtc") String studentEtc, @RequestParam("parentsName") String parentsName, @RequestParam("parentsPhone") String parentsPhone, @RequestParam("studentGender") String studentGender, @RequestParam(value = "studentImg", required = false) MultipartFile studentImg) {
         System.out.println("여기?");
 
-
         try {
-            studentsService.updateData(studentId,studentName,studentBirth,studentPhone,studentAddress,studentEtc,parentsName,parentsPhone,studentGender,studentImg);
+            studentsService.updateData(studentId, studentBirth, studentPhone, studentAddress, studentEtc, parentsName, parentsPhone, studentGender, studentImg);
             return ResponseEntity.ok("업데이트 성공");
-        }catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body("업데이트 실패.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
         }
-
     }
 }
 

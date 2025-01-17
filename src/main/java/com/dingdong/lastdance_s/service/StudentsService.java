@@ -51,12 +51,11 @@ public class StudentsService {
         return list;
     }
 
-    public void updateData(int studentId, String studentName, String studentBirth, String studentPhone, String studentAddress, String studentEtc, String parentsName, String parentsPhone, String studentGender, MultipartFile studentImg) throws IOException {
+    public void updateData(int studentId, String studentBirth, String studentPhone, String studentAddress, String studentEtc, String parentsName, String parentsPhone, String studentGender, MultipartFile studentImg) throws IOException {
 
         Students students = studentsRepository.findById(studentId)
                 .orElseThrow(() -> new RuntimeException("학생을 찾을 수 없습니다."));
 
-        students.setStudentName(studentName);
         students.setStudentBirth(Date.valueOf(studentBirth));
         students.setStudentPhone(studentPhone);
         students.setStudentAddress(studentAddress);
@@ -69,7 +68,15 @@ public class StudentsService {
             String imgPath = noticeService.saveFile(studentImg);
             students.setStudentImg(imgPath);
         }
+        studentsRepository.save(students);
+    }
 
+    public void addStudent(int studentNo, String studentName, int classId)
+    {
+        Students students = new Students();
+        students.setStudentNo(studentNo);
+        students.setStudentName(studentName);
+        students.setClassId(classId);
         studentsRepository.save(students);
     }
 }
