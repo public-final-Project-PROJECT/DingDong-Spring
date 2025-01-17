@@ -37,7 +37,7 @@ public class NoticeService {
         return noticeRepository.findAllByNoticeId(noticeId);
     }
 
-    public Notice saveNotice(String noticeTitle, Notice.NoticeCategory noticeCategory, String noticeContent,
+    public int saveNotice(String noticeTitle, Notice.NoticeCategory noticeCategory, String noticeContent,
                              MultipartFile noticeImg, MultipartFile noticeFile, int classId) throws IOException {
         Notice notice = new Notice();
         notice.setNoticeTitle(noticeTitle);
@@ -46,7 +46,7 @@ public class NoticeService {
         notice.setClassId(classId);
 
 
-      //
+        //
         // 이미지 파일 저장
         if (noticeImg != null && !noticeImg.isEmpty()) {
             System.out.println("noticeImg" + noticeImg.getOriginalFilename()+noticeImg);
@@ -60,7 +60,9 @@ public class NoticeService {
             notice.setNoticeFile(filePath);
         }
 
-        return noticeRepository.save(notice);
+        Notice savedNotice = noticeRepository.save(notice);
+
+        return  savedNotice.getNoticeId();
     }
 
     public String saveFile(MultipartFile file) throws IOException {
@@ -124,6 +126,6 @@ public class NoticeService {
     }
 
     public List<Notice> getNoticesByClassIdAndCategory(int classId, Notice.NoticeCategory noticeCategory) {
-         return noticeRepository.findByClassIdAndNoticeCategory(classId, noticeCategory);
+        return noticeRepository.findByClassIdAndNoticeCategory(classId, noticeCategory);
     }
 }

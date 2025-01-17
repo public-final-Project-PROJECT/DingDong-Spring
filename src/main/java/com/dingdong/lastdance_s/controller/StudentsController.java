@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -45,7 +46,9 @@ public class StudentsController {
     public  ResponseEntity<StudentsDTO> viewClassId
             (@PathVariable("studentId") int studentId) {
 
+
         StudentsDTO list =  studentsService.getStudentsAndClassByStudentId(studentId);
+        System.out.println(list);
 
         return ResponseEntity.ok(list);
     }
@@ -75,6 +78,31 @@ public class StudentsController {
                     .body("메모 업데이트 실패: " + e.getMessage());
         }
 
+
+    }
+
+    @PostMapping("/register/{studentId}")
+    public ResponseEntity<String> registStudent(
+            @PathVariable int studentId,
+            @RequestParam("studentName") String studentName,
+            @RequestParam("studentBirth") String studentBirth,
+            @RequestParam("studentPhone") String studentPhone,
+            @RequestParam("studentAddress") String studentAddress,
+            @RequestParam("studentEtc") String studentEtc,
+            @RequestParam("parentsName") String parentsName,
+            @RequestParam("parentsPhone") String parentsPhone,
+            @RequestParam("studentGender") String studentGender,
+            @RequestParam(value = "studentImg", required = false) MultipartFile studentImg) {
+        System.out.println("여기?");
+
+
+        try {
+            studentsService.updateData(studentId,studentName,studentBirth,studentPhone,studentAddress,studentEtc,parentsName,parentsPhone,studentGender,studentImg);
+            return ResponseEntity.ok("업데이트 성공");
+        }catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("업데이트 실패.");
+        }
 
     }
 }

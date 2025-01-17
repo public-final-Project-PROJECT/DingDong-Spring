@@ -36,12 +36,10 @@ public class AttendanceService {
                     .findByStudentIdAndAttendanceDate(dto.getStudentId(), dto.getAttendanceDate());
 
             if (existingAttendance != null) {
-                // 기존 출석 데이터 업데이트
                 existingAttendance.setAttendanceState(dto.getAttendanceState());
                 existingAttendance.setAttendanceEtc(dto.getAttendanceEtc());
                 attendanceRepository.save(existingAttendance);
             } else {
-                // 새로운 출석 데이터 삽입
                 Attendance newAttendance = new Attendance();
                 Students student = new Students();
                 student.setStudentId(dto.getStudentId());

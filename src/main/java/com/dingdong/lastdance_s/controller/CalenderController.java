@@ -23,7 +23,7 @@ public class CalenderController {
 
 
 
-        // 서비스에서 해당 id로 데이터를 가져옴
+
         List<Calender> response = calenderService.GetCalendar();
 
 
@@ -32,10 +32,10 @@ public class CalenderController {
 
     @PostMapping("/listselect")
     public ResponseEntity<Object> CalenderList(@RequestBody Map<String, Integer> requestBody) {
-        // 요청 본문에서 input 값 가져오기
+
         int calenderId = requestBody.get("input");
 
-        // 서비스에서 해당 id로 데이터를 가져옴
+
         Calender response = calenderService.CalenderList(calenderId);
 
 
@@ -71,7 +71,7 @@ public class CalenderController {
     }
     @PostMapping("/delete")
     public ResponseEntity<Object> CalendarDelete(@RequestBody Map<String, Integer> requestBody) {
-        // Extract the ID from the request body
+
         Integer id = requestBody.get("id");
 
         if (id == null) {
