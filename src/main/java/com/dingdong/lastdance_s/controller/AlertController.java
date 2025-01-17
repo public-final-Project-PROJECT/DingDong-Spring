@@ -5,11 +5,8 @@ import com.dingdong.lastdance_s.service.AlertService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 @RestController
 @RequestMapping("/api/alert")
@@ -21,7 +18,6 @@ public class AlertController {
     @PostMapping("/register")
     public ResponseEntity<?> registerAlert(@RequestBody AlertDTO alertDTO) {
 
-        System.out.println("알림확인");
         System.out.println(alertDTO.toString());
         alertService.alertSave(alertDTO);
 
@@ -34,16 +30,12 @@ public class AlertController {
 
 
         List<Alert> AlertList;
-        System.out.println(studentId);
-
         if (studentId == null) {
             AlertList = alertService.findByClassId(classId);
         } else {
             AlertList = alertService.findByClassIOrStudentId(classId, studentId);
         }
 
-
-        System.out.println("안녕");
         for (Alert alert : AlertList) {
             System.out.println(alert);
         }
@@ -53,6 +45,13 @@ public class AlertController {
             return ResponseEntity.status(500).body("알람 불러오기 오류");
         }
 
+
+    }
+
+    @GetMapping("/update")
+    public ResponseEntity<?> updateAlert( @RequestParam("alertId")int alertId) {
+        alertService.alertUpdate(alertId);
+        return ResponseEntity.ok("읽음 처리 완료");
 
     }
 }

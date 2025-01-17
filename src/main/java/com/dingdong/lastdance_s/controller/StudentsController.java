@@ -23,10 +23,7 @@ public class StudentsController {
 
     @GetMapping("/view")
     public ResponseEntity<List<Students>> view(@RequestParam("classId") int classId) {
-        List<Students> list = studentsService.getStudentsByClassId(classId);
-//      for (Students students : list) {
-//          System.out.println(students);
-//      }
+        List<Students> list =  studentsService.getStudentsByClassId(classId);
         return ResponseEntity.ok(list);
 
     }
@@ -34,10 +31,7 @@ public class StudentsController {
     @GetMapping("/viewClass")
     public ResponseEntity<List<StudentsDTO>> viewClass(@RequestParam("classId") int classId) {
 
-        List<StudentsDTO> list = studentsService.getStudentsByClass(classId);
-        for (StudentsDTO students : list) {
-            System.out.println(students);
-        }
+        List<StudentsDTO> list =  studentsService.getStudentsByClass(classId);
         return ResponseEntity.ok(list);
 
     }
