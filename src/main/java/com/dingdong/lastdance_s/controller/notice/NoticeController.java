@@ -22,30 +22,18 @@ public class NoticeController {
     @Autowired
     private NoticeService noticeService;
 
-    private String uploadPath = "C:/uploads";  // 실제 경로로 수정하세요
+    private String uploadPath = "C:/uploads";
 
 
-//    @GetMapping("/view")
-//    public ResponseEntity<List<Notice>> view(@RequestParam("classId") int classId) {
-//        List<Notice> list = noticeService.getNoticesByClassId(classId);
-//        return ResponseEntity.ok(list);
-//    }
 
     @GetMapping("/view")
     public ResponseEntity<List<Notice>> view(
             @RequestParam("classId") int classId,
             @RequestParam(value = "noticeCategory", required = false) Notice.NoticeCategory noticeCategory) {
-
-        System.out.println("여기오나");
-
-        System.out.println("noticeCategory있나"+noticeCategory);
-        System.out.println("여기오나");
         List<Notice> list;
         if (noticeCategory != null) {
-            // Enum 타입으로 카테고리를 필터링
             list = noticeService.getNoticesByClassIdAndCategory(classId, noticeCategory);
         } else {
-            // 카테고리가 없는 경우 전체 데이터를 가져옴
             list = noticeService.getNoticesByClassId(classId);
             System.out.println(list);
         }
@@ -56,11 +44,10 @@ public class NoticeController {
 
     @GetMapping("/detail/{noticeId}")
     public ResponseEntity<List<Notice>> viewDetail(@PathVariable int noticeId) {
-
         List<Notice> list = noticeService.getNoticeIdByNotice(noticeId);
-//        for (Notice notice : list) {
-//            System.out.println(notice);
-//        }
+        for (Notice notice : list) {
+            System.out.println(notice);
+        }
         return ResponseEntity.ok(list);
 
     }

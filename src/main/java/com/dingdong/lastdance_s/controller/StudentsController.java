@@ -24,9 +24,6 @@ public class StudentsController {
     @GetMapping("/view")
     public ResponseEntity<List<Students>> view(@RequestParam("classId") int classId) {
         List<Students> list =  studentsService.getStudentsByClassId(classId);
-//      for (Students students : list) {
-//          System.out.println(students);
-//      }
         return ResponseEntity.ok(list);
 
     }
@@ -35,9 +32,6 @@ public class StudentsController {
     public ResponseEntity<List<StudentsDTO>> viewClass(@RequestParam("classId") int classId) {
 
         List<StudentsDTO> list =  studentsService.getStudentsByClass(classId);
-        for (StudentsDTO students : list) {
-            System.out.println(students);
-        }
         return ResponseEntity.ok(list);
 
     }
@@ -93,7 +87,6 @@ public class StudentsController {
             @RequestParam("parentsPhone") String parentsPhone,
             @RequestParam("studentGender") String studentGender,
             @RequestParam(value = "studentImg", required = false) MultipartFile studentImg) {
-        System.out.println("여기?");
 
 
         try {
