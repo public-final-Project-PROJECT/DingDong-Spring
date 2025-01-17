@@ -1,5 +1,6 @@
 package com.dingdong.lastdance_s.controller;
 
+import com.dingdong.lastdance_s.entity.Alert;
 import com.dingdong.lastdance_s.entity.voting.Voting;
 import com.dingdong.lastdance_s.entity.voting.VotingContents;
 import com.dingdong.lastdance_s.entity.voting.VotingRecord;
@@ -202,6 +203,18 @@ public class VotingController {
         }
         return ResponseEntity.status(500).body(null);
     }
+//
+//    // 미투표 학생 alert
+//    @PostMapping("votingUserAlertSave")
+//    public ResponseEntity<Object> votingUserAlertSave( @RequestBody Map<String, Object> voteData){
+//        int votingId = (int) voteData.get("votingId");
+//        int classId = (int) voteData.get("classId");
+//        int studentId = (int) voteData.get("studentId");
+//
+//        Alert alert = votingService.nonVotingAlertSave(classId, studentId, votingId);
+//
+//
+//    }
 
 
 

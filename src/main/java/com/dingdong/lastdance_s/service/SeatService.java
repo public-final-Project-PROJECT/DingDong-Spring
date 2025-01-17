@@ -44,8 +44,8 @@ public class SeatService {
         for (Map<String, Object> seat : seatList) {
 
             Integer classId = (Integer) seat.get("classId");
-            if((Integer) seat.get("studentId") == null){
-                return;
+            if (seat.get("studentId") == null) {
+                continue;
             }
             Integer studentId = (Integer) seat.get("studentId");
             Integer rowId = (Integer) seat.get("rowId");
