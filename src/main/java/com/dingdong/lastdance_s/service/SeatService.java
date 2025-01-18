@@ -39,8 +39,14 @@ public class SeatService {
 
     @Transactional
     public void updateSeats(List<Map<String, Object>> seatList) {
+
+        System.out.println("랜덤돌린좌석 저장하러 서비스 :: " + seatList);
         for (Map<String, Object> seat : seatList) {
+
             Integer classId = (Integer) seat.get("classId");
+            if (seat.get("studentId") == null) {
+                continue;
+            }
             Integer studentId = (Integer) seat.get("studentId");
             Integer rowId = (Integer) seat.get("rowId");
             Integer columnId = (Integer) seat.get("columnId");
@@ -57,44 +63,44 @@ public class SeatService {
     }
 
     // 좌석 저장
-    public List<Map<String, Object>> saveSeat(List<Map<String, Object>> newSeats) {
-        System.out.println("좌석 저장에 넘어온 newSeats :: " + newSeats);
-        List<Map<String, Object>> savedSeats = new ArrayList<>();
-
-        for (Map<String, Object> seatData : newSeats) {
-            try {
-                // studentId 변환
-                Object studentIdObj = seatData.get("studentId");
-                Integer studentId = (Integer) studentIdObj;
-
-
-                // 데이터 가져오기
-                int columnId = Integer.parseInt(seatData.get("columnId").toString());
-                int rowId = Integer.parseInt(seatData.get("rowId").toString());
-                int classId = 2; // 예제의 경우 고정값, 필요시 동적으로 처리
-
-                // Seat 객체 생성 및 저장
-                Seat seat = new Seat(classId, columnId, rowId, studentId);
-                System.out.println("여기이이이 4개 찍혀야댐 :: " + seat.toString());
-                Seat lastSeat = seatRepository.save(seat);
-
-                // 저장된 좌석을 Map으로 변환
-                Map<String, Object> seatMap = new HashMap<>();
-                seatMap.put("seatId", lastSeat.getSeatId());
-                seatMap.put("classId", lastSeat.getClassId());
-
-                seatMap.put("columnId", lastSeat.getColumnId());
-                seatMap.put("rowId", lastSeat.getRowId());
-                seatMap.put("studentId", lastSeat.getStudentId());
-
-                savedSeats.add(seatMap);
-            } catch (Exception e) {
-                System.out.println("좌석 저장 중 오류 발생: " + e.getMessage());
-            }
-        }
-
-        return savedSeats;
-    }
+//    public List<Map<String, Object>> saveSeat(List<Map<String, Object>> newSeats) {
+//        System.out.println("좌석 저장에 넘어온 newSeats :: " + newSeats);
+//        List<Map<String, Object>> savedSeats = new ArrayList<>();
+//
+//        for (Map<String, Object> seatData : newSeats) {
+//            try {
+//                // studentId 변환
+//                Object studentIdObj = seatData.get("studentId");
+//                Integer studentId = (Integer) studentIdObj;
+//
+//
+//                // 데이터 가져오기
+//                int columnId = Integer.parseInt(seatData.get("columnId").toString());
+//                int rowId = Integer.parseInt(seatData.get("rowId").toString());
+//                int classId = 2; // 예제의 경우 고정값, 필요시 동적으로 처리
+//
+//                // Seat 객체 생성 및 저장
+//                Seat seat = new Seat(classId, columnId, rowId, studentId);
+//                System.out.println("여기이이이 4개 찍혀야댐 :: " + seat.toString());
+//                Seat lastSeat = seatRepository.save(seat);
+//
+//                // 저장된 좌석을 Map으로 변환
+//                Map<String, Object> seatMap = new HashMap<>();
+//                seatMap.put("seatId", lastSeat.getSeatId());
+//                seatMap.put("classId", lastSeat.getClassId());
+//
+//                seatMap.put("columnId", lastSeat.getColumnId());
+//                seatMap.put("rowId", lastSeat.getRowId());
+//                seatMap.put("studentId", lastSeat.getStudentId());
+//
+//                savedSeats.add(seatMap);
+//            } catch (Exception e) {
+//                System.out.println("좌석 저장 중 오류 발생: " + e.getMessage());
+//            }
+//        }
+//
+//        return savedSeats;
+//    }
 
     public List<Seat> insertSeats(List<Map<String, Object>> newSeats) {
         System.out.println("새로 만든 seat 서비스 : " + newSeats);

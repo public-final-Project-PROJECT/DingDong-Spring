@@ -1,8 +1,6 @@
 package com.dingdong.lastdance_s.entity;
 
 import com.dingdong.lastdance_s.entity.voting.Voting;
-import com.dingdong.lastdance_s.model.Notice;
-import com.dingdong.lastdance_s.model.Students;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,10 +24,8 @@ public class Alert {
     private AlertCategory alertCategory;
 
 
-
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "voting_id")
-    private Voting votingId;
+    @Column(name = "voting_id")
+    private int votingId;
 
     @Column(name = "notice_id")
     private Integer noticeId;
@@ -53,7 +49,7 @@ public class Alert {
     public Alert() {
     }
 
-    public Alert(int alertId, AlertCategory alertCategory, Voting votingId, int noticeId, int classId, int studentId, boolean isRead, Timestamp alertAt) {
+    public Alert(int alertId, AlertCategory alertCategory, int votingId, int noticeId, int classId, int studentId, boolean isRead, Timestamp alertAt) {
         this.alertId = alertId;
         this.alertCategory = alertCategory;
         this.votingId = votingId;
