@@ -2,8 +2,15 @@ package com.dingdong.lastdance_s.controller.notice;
 
 
 import com.dingdong.lastdance_s.model.Notice;
+import com.dingdong.lastdance_s.model.Students;
 import com.dingdong.lastdance_s.service.NoticeService;
+import com.dingdong.lastdance_s.service.StudentsService;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingException;
+import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +31,8 @@ public class NoticeController {
 
     private String uploadPath = "C:/uploads";
 
+    @Autowired
+    private StudentsService studentsService;
 
 
     @GetMapping("/view")
@@ -64,11 +73,36 @@ public class NoticeController {
     ) {
         try {
             int noticeId = noticeService.saveNotice(noticeTitle, noticeCategory, noticeContent, noticeImg, noticeFile, classId);
-
-
             Map<String, Object> response = new HashMap<>();
             response.put("message", "공지사항이 등록되었습니다.");
             response.put("noticeId", noticeId);
+
+
+           List<Integer>studentList =  studentsService.findStudentIdsByClassId(classId);
+
+            for (Integer studentId : studentList) {
+                String token = studentsService.findTokenByStudentId(studentId);
+
+                // token이 존재하면 알림 전송
+                if (token != null && !token.isEmpty()) {
+
+                    try {
+                        Message message = Message.builder()
+                                .setToken(token)
+                                .setNotification(Notification.builder()
+                                        .setTitle("공지사항")
+                                        .setBody("새로운 공지사항이 등록되었습니다.")
+                                        .build())
+                                .build();
+                        String responseMessage = FirebaseMessaging.getInstance().send(message);
+                        System.out.println("알림 전송 성공: " + responseMessage);
+                    } catch (FirebaseMessagingException e) {
+                        System.err.println("알림 전송 실패 (학생 ID: " + studentId + "): " + e.getMessage());
+                    }
+                } else {
+                    System.err.println("유효하지 않은 토큰 (학생 ID: " + studentId + ")");
+                }
+            }
 
             return ResponseEntity.ok(response);
 
@@ -89,7 +123,7 @@ public class NoticeController {
             @RequestParam(value = "noticeImg", required = false) MultipartFile noticeImg,
             @RequestParam(value = "noticeFile", required = false) MultipartFile noticeFile
     ) {
-        System.out.println("오");
+
         try {
 
             Notice existingNotice = noticeService.getNoticeById(noticeId);
@@ -107,7 +141,7 @@ public class NoticeController {
             if (noticeFile != null && !noticeFile.isEmpty()) {
                 String filePath = noticeService.saveFile(noticeFile);  // saveFile 호출
                 existingNotice.setNoticeFile(filePath);
-            }else {
+            } else {
 
                 String currentFilePath = existingNotice.getNoticeFile();
                 if (currentFilePath != null && !currentFilePath.isEmpty()) {
@@ -142,7 +176,31 @@ public class NoticeController {
         }
     }
 
+    @PostMapping("/hi")
+    public ResponseEntity<?> hi(@RequestBody Map<String, Object> notice) {
+
+        Integer studentId = (Integer) notice.get("studentId");
+
+        String token = studentsService.findTokenByStudentId(studentId);
+        try {
+            Message message = Message.builder()
+                    .setToken(token)
+                    .setNotification(Notification.builder()
+                            .setTitle("공지사항")
+                            .setBody("작성이 되었습니다!!!!!")
+                            .build()).build();
+            String response = FirebaseMessaging.getInstance().send(message);
+            System.out.println(response);
+        } catch (FirebaseMessagingException e) {
+            e.printStackTrace();
+        }
+        if (token != null && !token.isEmpty()) {
+            return ResponseEntity.ok("Token registered.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid token.");
+        }
+
+    }
+
+
 }
-
-
-
