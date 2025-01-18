@@ -34,5 +34,10 @@ public interface StudentsRepository  extends JpaRepository<Students, Integer> {
     StudentsDTO findStudentsAndClassByStudentId(@Param("studentId") int studentId);
     List<Students> findByClassId(int classId);
 
+    @Query("SELECT s.token FROM Students s WHERE s.studentId = :studentId")
+    String findByToken(Integer studentId);
+
+    @Query("SELECT s.studentId FROM Students s WHERE s.classId = :classId")
+    List<Integer> findStudentIdByClassId(int classId);
 }
 
