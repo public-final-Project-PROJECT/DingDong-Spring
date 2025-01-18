@@ -6,21 +6,18 @@ import com.dingdong.lastdance_s.repository.AlertRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
-public class AlertService  {
-
+public class AlertService {
 
     @Autowired
     private AlertRepository alertRepository;
 
 
-
     public void alertSave(AlertDTO alertDTO) {
         Alert alert = new Alert();
-        Alert.AlertCategory alertCategory = Alert.AlertCategory.fromString(alertDTO.getAlertCategory().toString());
+        Alert.AlertCategory alertCategory = Alert.AlertCategory.fromString(alertDTO.getAlertCategory());
         alert.setAlertCategory(alertCategory);
         alert.setNoticeId(alertDTO.getNoticeId());
         alert.setClassId(alertDTO.getClassId());
@@ -29,31 +26,22 @@ public class AlertService  {
     }
 
     public List<Alert> findByClassId(int classId) {
-        List<Alert> AlertList = alertRepository.findByClassId(classId);
 
-        if (AlertList != null){
-            return AlertList;
-        }else {
-            return null;
-        }
+        return alertRepository.findByClassId(classId);
     }
 
     public List<Alert> findByClassIOrStudentId(int classId, Integer studentId) {
-        List<Alert> AlertList = alertRepository.findByClassIdOrStudentId(classId,studentId);
 
-        if (AlertList != null){
-            return AlertList;
-        }else {
-            return null;
-        }
+        return alertRepository.findByClassIdOrStudentId(classId, studentId);
     }
 
     public void alertUpdate(int alertId) {
-        Alert alert = alertRepository.findById(alertId)
-                .orElseThrow(() -> new IllegalArgumentException("No alert found with ID: " + alertId));
+        Alert alert = alertRepository.findById(alertId).orElseThrow(() -> new IllegalArgumentException("No alert found with ID: " + alertId));
 
         alert.setIsRead(true);
         alertRepository.save(alert);
+    }
+
     public Alert nonVotingAlertSave(int classId, int studentId, int votingId) {
 
         Alert alert = new Alert();
@@ -62,10 +50,6 @@ public class AlertService  {
         alert.setStudentId(studentId);
         alert.setVotingId(votingId);
 
-        Alert AlertList = alertRepository.save(alert);
-        if(AlertList == null) {
-            return null;
-        }
-        return AlertList;
+        return alertRepository.save(alert);
     }
 }
