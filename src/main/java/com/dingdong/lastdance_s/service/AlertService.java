@@ -46,11 +46,21 @@ public class AlertService {
     public Alert nonVotingAlertSave(int classId, int studentId, int votingId) {
 
         Alert alert = new Alert();
-        alert.setAlertCategory(Alert.AlertCategory.valueOf("투표"));
+        alert.setAlertCategory(Alert.AlertCategory.valueOf("투표재촉"));
         alert.setClassId(classId);
         alert.setStudentId(studentId);
         alert.setVotingId(votingId);
 
         return alertRepository.save(alert);
+    }
+
+    public Alert votingResultAlert(int classId, int votingId) {
+
+        Alert alert = new Alert();
+        alert.setAlertCategory(Alert.AlertCategory.valueOf("투표결과"));
+        alert.setClassId(classId);
+        alert.setVotingId(votingId);
+        return alertRepository.save(alert);
+
     }
 }
