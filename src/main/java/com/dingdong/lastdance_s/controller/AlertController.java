@@ -65,13 +65,25 @@ public class AlertController {
         int classId = (int) voteData.get("classId");
         int studentId = (int) voteData.get("studentId");
 
-        System.out.println("투표 알림에서 넘어옴");
-        System.out.println(votingId + " : " + classId + " : " + studentId);
         Alert alert = alertService.nonVotingAlertSave(classId, studentId, votingId);
         if (alert != null) {
             return ResponseEntity.ok(alert);
         } else {
             return ResponseEntity.status(500).body("알람 불러오기 오류");
         }
+    }
+
+    // 투표 결과 알림
+    @PostMapping("votingResultAlert")
+    public ResponseEntity<Object> votingResultAlert(@RequestBody Map<String, Object> voteData) {
+        int votingId = (int) voteData.get("votingId");
+        int classId = (int) voteData.get("classId");
+        Alert alert = alertService.votingResultAlert(classId, votingId);
+        if (alert != null) {
+            return ResponseEntity.ok(alert);
+        } else {
+            return ResponseEntity.status(500).body("알람 불러오기 오류");
+        }
+
     }
 }

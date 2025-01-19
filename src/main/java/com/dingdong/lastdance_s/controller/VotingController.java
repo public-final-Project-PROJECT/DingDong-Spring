@@ -41,10 +41,10 @@ public class VotingController {
 
             boolean votingContents = votingService.saveVotingContents(voteData, valueOf(listId));
 
-           if(votingContents && voting != null){
-               return ResponseEntity.ok("등록 성공");
-           }
-           return ResponseEntity.status(500).body(null);
+            if(votingContents && voting != null){
+                return ResponseEntity.ok("등록 성공");
+            }
+            return ResponseEntity.status(500).body(null);
         }
         return ResponseEntity.status(500).body(null);
     }
@@ -128,7 +128,7 @@ public class VotingController {
             @RequestBody Map<String, Object> voteData
     ){
 
-         int votingId = (int) voteData.get("votingId");
+        int votingId = (int) voteData.get("votingId");
 
         List<VotingRecord> result = votingRecordRepository.findByVotingId(votingId);
 
