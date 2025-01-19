@@ -183,11 +183,6 @@ public class  VotingService {
             return false;
         }
     }
-//
-//    public Alert nonVotingAlertSave(int classId, int studentId, int votingId) {
-//        return
-//    }
-//
 
 //    @Transactional
 //    public void updateExpiredVotings() {
