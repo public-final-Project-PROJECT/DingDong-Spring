@@ -54,6 +54,9 @@ public class Students {
     @Column(name = "class_id")
     private int classId;
 
+    @Column(name = "token")
+    private String token;
+
     public Students() {
     }
 

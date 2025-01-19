@@ -23,6 +23,8 @@ public class StudentsService {
     @Autowired
     StudentsRepository studentsRepository;
 
+
+
     public List<Students> getStudentsByClassId(int classId) {
         return studentsRepository.findAllByClassId(classId);
     }
@@ -78,6 +80,25 @@ public class StudentsService {
         students.setStudentName(studentName);
         students.setClassId(classId);
         studentsRepository.save(students);
+    }
+
+    public void updateToken(String token, Integer studentId) {
+        Students students = studentsRepository.findById(studentId)
+                .orElseThrow(() -> new RuntimeException("학생을 찾을 수 없습니다."));
+        students.setToken(token);
+        studentsRepository.save(students);
+
+    }
+
+
+    public String findTokenByStudentId(Integer studentId) {
+      String token =   studentsRepository.findByToken(studentId);
+      return token;
+    }
+
+    public List<Integer> findStudentIdsByClassId(int classId) {
+        List<Integer> studentList = studentsRepository.findStudentIdByClassId(classId);
+        return studentList;
     }
 }
 
