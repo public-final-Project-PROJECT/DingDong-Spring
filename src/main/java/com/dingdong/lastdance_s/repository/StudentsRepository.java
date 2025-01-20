@@ -39,5 +39,8 @@ public interface StudentsRepository  extends JpaRepository<Students, Integer> {
 
     @Query("SELECT s.studentId FROM Students s WHERE s.classId = :classId")
     List<Integer> findStudentIdByClassId(int classId);
+
+    @Query("SELECT s.studentId FROM Students s WHERE s.classId = :classId AND s.studentNo = :studentNo")
+    int getStudentByClassIdAndStudentNo(int classId, int studentNo);
 }
 

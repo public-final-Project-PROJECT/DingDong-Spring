@@ -44,7 +44,6 @@ public class NoticeController {
             list = noticeService.getNoticesByClassIdAndCategory(classId, noticeCategory);
         } else {
             list = noticeService.getNoticesByClassId(classId);
-            System.out.println(list);
         }
 
         return ResponseEntity.ok(list);
@@ -54,9 +53,6 @@ public class NoticeController {
     @GetMapping("/detail/{noticeId}")
     public ResponseEntity<List<Notice>> viewDetail(@PathVariable int noticeId) {
         List<Notice> list = noticeService.getNoticeIdByNotice(noticeId);
-        for (Notice notice : list) {
-            System.out.println(notice);
-        }
         return ResponseEntity.ok(list);
 
     }

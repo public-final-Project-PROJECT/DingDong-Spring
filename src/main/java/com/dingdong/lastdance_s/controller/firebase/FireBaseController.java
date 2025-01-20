@@ -25,6 +25,7 @@ public class FireBaseController {
 
     @PostMapping("/register-token")
     public ResponseEntity<String> registerToken(@RequestBody Map<String,Object> tokenRequest) {
+
         String token = (String) tokenRequest.get("token");
         Integer studentId = (Integer) tokenRequest.get("studentId");
         studentsService.updateToken(token,studentId);
