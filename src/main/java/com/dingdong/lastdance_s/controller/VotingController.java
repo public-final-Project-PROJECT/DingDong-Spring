@@ -183,6 +183,21 @@ public class VotingController {
         return ResponseEntity.status(500).body(null);
     }
 
+    @PostMapping("votingNameSearch")
+    public ResponseEntity<Object> votingNameSearch(
+            @RequestBody Map<String, Object> voteData
+    ){
+        System.out.println("투표 이름 검색");
+        int votingId = (int) voteData.get("votingId");
+        System.out.println(votingId);
+        Voting voting = (Voting) votingService.findByClassIdAndVotingName(votingId);
+        String votingName = voting.getVotingName();
+        System.out.println("투표 이름 : " + votingName); ;
+        if(voting == null){
+            return ResponseEntity.status(500).body(null);
+        }
+        return ResponseEntity.ok(votingName);
+    }
 
 
 }

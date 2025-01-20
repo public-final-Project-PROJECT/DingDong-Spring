@@ -184,6 +184,12 @@ public class  VotingService {
         }
     }
 
+    public Object findByClassIdAndVotingName(int votingId) {
+
+        Voting voting = (Voting) votingRepository.findByVotingId(votingId);
+        return voting;
+    }
+
 //    @Transactional
 //    public void updateExpiredVotings() {
 //        // 현재 날짜/시간 가져오기

@@ -62,8 +62,9 @@ public class Alert {
 
     public enum AlertCategory {
         공지사항("공지사항"),
-        투표("투표"),
-        타이머("타이머");
+        투표재촉("투표재촉"),
+        타이머("타이머"),
+        투표결과("투표결과");
 
         private String value;
 
