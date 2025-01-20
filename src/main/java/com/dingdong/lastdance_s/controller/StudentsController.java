@@ -66,8 +66,8 @@ public class StudentsController {
         }
     }
 
-    @GetMapping("/get/{classId}/{studentNo}")
-    public int getStudent(@PathVariable int classId, @PathVariable int studentNo) {
+    @GetMapping("/get/class/{classId}/no/{studentNo}")
+    public int getStudentByClassIdAndStudentNo(@PathVariable int classId, @PathVariable int studentNo) {
         return studentsService.getStudentByClassIdAndStudentNo(classId, studentNo);
     }
 
