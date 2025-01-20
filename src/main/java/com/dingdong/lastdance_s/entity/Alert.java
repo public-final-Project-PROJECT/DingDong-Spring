@@ -25,7 +25,7 @@ public class Alert {
 
 
     @Column(name = "voting_id")
-    private int votingId;
+    private Integer votingId;
 
     @Column(name = "notice_id")
     private Integer noticeId;
