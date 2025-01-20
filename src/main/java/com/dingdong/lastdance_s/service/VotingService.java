@@ -1,5 +1,6 @@
 package com.dingdong.lastdance_s.service;
 
+import com.dingdong.lastdance_s.entity.Alert;
 import jakarta.transaction.Transactional;
 import com.dingdong.lastdance_s.entity.voting.Voting;
 import com.dingdong.lastdance_s.entity.voting.VotingContents;
@@ -34,6 +35,9 @@ public class  VotingService {
     @Autowired
     private StudentsRepository studentsRepository;
 
+//    @Autowired
+//    private AlertRe alertRepository;
+//
 
     // 투표 insert
     public Voting saveVoting(Map<String, Object> voteData) {
@@ -179,8 +183,6 @@ public class  VotingService {
             return false;
         }
     }
-
-
 
 //    @Transactional
 //    public void updateExpiredVotings() {
