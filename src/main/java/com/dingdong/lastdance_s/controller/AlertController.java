@@ -18,10 +18,7 @@ public class AlertController {
     @PostMapping("/register")
     public ResponseEntity<?> registerAlert(@RequestBody AlertDTO alertDTO) {
 
-        System.out.println(alertDTO.toString());
         alertService.alertSave(alertDTO);
-
-
         return ResponseEntity.ok("");
     }
 
