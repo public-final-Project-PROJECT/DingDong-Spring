@@ -15,7 +15,7 @@ public class StudentsDTO {
     private String studentPhone;
     private Students.GenderCategory studentGender;
     private String studentEtc;
-    private Date studentBirth;
+    private String studentBirth;
     private String studentAddress;
     private String parentsName;
     private String parentsPhone;
@@ -26,7 +26,7 @@ public class StudentsDTO {
     private int classNo;
     private int studentNo;
 
-    public StudentsDTO(int studentId, String studentName, String studentImg, String studentPhone, Students.GenderCategory studentGender, String studentEtc, Date studentBirth, String studentAddress, String parentsName, String parentsPhone, String memo, int classId, String schoolName, int grade, int classNo, int studentNo) {
+    public StudentsDTO(int studentId, String studentName, String studentImg, String studentPhone, Students.GenderCategory studentGender, String studentEtc, String studentBirth, String studentAddress, String parentsName, String parentsPhone, String memo, int classId, String schoolName, int grade, int classNo, int studentNo) {
         this.studentId = studentId;
         this.studentName = studentName;
         this.studentImg = studentImg;

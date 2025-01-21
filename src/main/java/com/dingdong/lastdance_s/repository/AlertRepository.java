@@ -17,4 +17,7 @@ public interface AlertRepository extends JpaRepository<Alert, Integer> {
     List<Alert> findByClassIdOrStudentId(int classId, Integer studentId);
 
     void deleteByVotingId(int votingId);
+
+    @Query("SELECT s.alertId FROM  Alert s WHERE s.noticeId = :noticeId")
+    int alertDelete(int noticeId);
 }
