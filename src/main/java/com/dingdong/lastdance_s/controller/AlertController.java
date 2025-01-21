@@ -69,7 +69,7 @@ public class AlertController {
 
     }
 
-    // 미투표 학생 alert
+
     @PostMapping("votingUserAlertSave")
     public ResponseEntity<Object> votingUserAlertSave(@RequestBody Map<String, Object> voteData) {
         int votingId = (int) voteData.get("votingId");

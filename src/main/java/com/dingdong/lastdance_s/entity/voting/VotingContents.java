@@ -9,13 +9,13 @@ public class VotingContents {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int votingContentsId;  // 투표 항목 고유 id
+    private int votingContentsId;
 
     @Column(name = "voting_id")
-    private int votingId;  // 투표 고유 id
+    private int votingId;
 
     @Column(name = "voting_contents")
-    private String votingContents;  // 투표 항목 내용
+    private String votingContents;
 
     public VotingContents() {
     }
