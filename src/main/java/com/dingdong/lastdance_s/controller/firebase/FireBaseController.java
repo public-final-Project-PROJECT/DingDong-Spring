@@ -28,9 +28,12 @@ public class FireBaseController {
 
         String token = (String) tokenRequest.get("token");
         Integer studentId = (Integer) tokenRequest.get("studentId");
+
+        System.out.println("studentId:"+studentId);
         studentsService.updateToken(token,studentId);
 
         System.out.println(token);
+        System.out.println("studentId:"+studentId);
 
         try{
             Message message = Message.builder()

@@ -34,7 +34,7 @@ public class Students {
     private String studentEtc;
 
     @Column(name = "student_birth" )
-    private Date studentBirth;
+    private String studentBirth;
 
     @Column(name = "student_address")
     private String studentAddress;
@@ -52,7 +52,7 @@ public class Students {
     private int studentNo;
 
     @Column(name = "class_id")
-    private int classId;
+    private Integer classId;
 
     @Column(name = "token")
     private String token;
@@ -60,7 +60,7 @@ public class Students {
     public Students() {
     }
 
-    public Students(int studentId, String studentName, String studentImg, String studentPhone, GenderCategory studentGender, String studentEtc, Date studentBirth, String studentAddress, String parentsName, String parentsPhone, String memo, int studentNo, int classId) {
+    public Students(int studentId, String studentName, String studentImg, String studentPhone, GenderCategory studentGender, String studentEtc, String studentBirth, String studentAddress, String parentsName, String parentsPhone, String memo, int studentNo, int classId) {
         this.studentId = studentId;
         this.studentName = studentName;
         this.studentImg = studentImg;
@@ -74,6 +74,26 @@ public class Students {
         this.memo = memo;
         this.studentNo = studentNo;
         this.classId = classId;
+    }
+
+    @Override
+    public String toString() {
+        return "Students{" +
+                "studentId=" + studentId +
+                ", studentName='" + studentName + '\'' +
+                ", studentImg='" + studentImg + '\'' +
+                ", studentPhone='" + studentPhone + '\'' +
+                ", studentGender=" + studentGender +
+                ", studentEtc='" + studentEtc + '\'' +
+                ", studentBirth=" + studentBirth +
+                ", studentAddress='" + studentAddress + '\'' +
+                ", parentsName='" + parentsName + '\'' +
+                ", parentsPhone='" + parentsPhone + '\'' +
+                ", memo='" + memo + '\'' +
+                ", studentNo=" + studentNo +
+                ", classId=" + classId +
+                ", token='" + token + '\'' +
+                '}';
     }
 
     public enum GenderCategory {

@@ -77,6 +77,7 @@ public class StudentsController {
             studentsService.updateData(studentId, studentBirth, studentPhone, studentAddress, studentEtc, parentsName, parentsPhone, studentGender, studentImg);
             return ResponseEntity.ok("업데이트 성공");
         } catch (Exception e) {
+            System.out.println("t실패");
             return ResponseEntity.status(500).body(e.getMessage());
         }
     }
