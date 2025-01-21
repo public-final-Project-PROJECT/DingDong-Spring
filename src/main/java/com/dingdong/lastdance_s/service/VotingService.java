@@ -1,6 +1,7 @@
 package com.dingdong.lastdance_s.service;
 
 import com.dingdong.lastdance_s.entity.Alert;
+import com.dingdong.lastdance_s.repository.AlertRepository;
 import jakarta.transaction.Transactional;
 import com.dingdong.lastdance_s.entity.voting.Voting;
 import com.dingdong.lastdance_s.entity.voting.VotingContents;
@@ -34,34 +35,24 @@ public class  VotingService {
     private VotingRecordRepository votingRecordRepository;
     @Autowired
     private StudentsRepository studentsRepository;
+    @Autowired
+    private AlertRepository alertRepository;
 
-//    @Autowired
-//    private AlertRe alertRepository;
-//
 
-    // 투표 insert
     public Voting saveVoting(Map<String, Object> voteData) {
         Voting voting = new Voting();
-        voting.setClassId((Integer) voteData.get("classId")); // 학급 id
-        voting.setVotingName(voteData.get("votingName").toString()); // 제목
-        voting.setVotingDetail(voteData.get("detail").toString()); // 설명
-
+        voting.setClassId((Integer) voteData.get("classId"));
+        voting.setVotingName(voteData.get("votingName").toString());
+        voting.setVotingDetail(voteData.get("detail").toString());
 
         String votingEndStr = (String) voteData.get("votingEnd");
         LocalDateTime date = null;
 
         if (votingEndStr != null && !votingEndStr.equals("no")) {
             try {
-
                 String cleanedDate = votingEndStr.replace(".000", "");
-
-
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-
                 date = LocalDateTime.parse(cleanedDate, formatter);
-
-
                 voting.setVotingEnd(date);
 
             } catch (DateTimeParseException e) {
@@ -70,26 +61,22 @@ public class  VotingService {
             }
         }
 
-        voting.setCreatedAt(LocalDateTime.now()); // 생성일
-        voting.setVote(true); // 투표 진행 여부
-        voting.setAnonymousVote((Boolean) voteData.get("anonymousVote")); // 비밀 투표 여부
-        voting.setDoubleVote((Boolean) voteData.get("doubleVote")); // 중복 투표 가능 여부
+        voting.setCreatedAt(LocalDateTime.now());
+        voting.setVote(true);
+        voting.setAnonymousVote((Boolean) voteData.get("anonymousVote"));
+        voting.setDoubleVote((Boolean) voteData.get("doubleVote"));
 
         Voting result = votingRepository.save(voting);
         return result;
     }
 
 
-
-
-    // 투표 항목 insert
     public Boolean  saveVotingContents(Map<String, Object> voteData, Integer integer) {
 
-        List<String> contents = (List<String>) voteData.get("contents"); // 항목
+        List<String> contents = (List<String>) voteData.get("contents");
 
         for (String content : contents) {
 
-            // 매변 새로운 객체를 생성
             VotingContents votingContents = new VotingContents();
             votingContents.setVotingId(integer);
             votingContents.setVotingContents(content);
@@ -102,7 +89,6 @@ public class  VotingService {
     public List<Voting> findByClassId(int classId) {
 
         List<Voting> result = votingRepository.findByClassId(classId);
-
 
         if (result.size() > 0) {
             return result;
@@ -141,27 +127,18 @@ public class  VotingService {
     public boolean updateIsVote(int votingId) {
 
         Voting voting = (Voting) votingRepository.findByVotingId(votingId);
-        voting.setVote(false); // 투표 상태 (진행종료로) 바꿔주기
+        voting.setVote(false);
         Voting result2 = votingRepository.save(voting);
         if(result2 != null){
             return true;
         }
         return false;
     }
-//
-//    public List<VotingRecord> findByStudentId(int votingId, int studentId) {
-//
-//        List<VotingRecord> result = votingRecordRepository.findByStudentId(studentId);
-//        if (result.size() > 0) {
-//            return result;
-//        }
-//        return Collections.emptyList();
-//    }
+
 
     public List<Students> findByStudentsName(int classId) {
 
         List<Students> result = studentsRepository.findByClassId(classId);
-        System.out.println("학생 name 조회 결과 :: " + result);
         if (result.size() > 0) {
             return result;
         }
@@ -170,10 +147,12 @@ public class  VotingService {
 
     public boolean deleteVoting(int votingId) {
         try {
-            // int id = votingId;
             votingRecordRepository.deleteByVotingId(votingId);
             votingContentsRepository.deleteByVotingId(votingId);
+            alertRepository.deleteByVotingId(votingId);
+
             votingRepository.deleteById(votingId);
+
             return true;
         } catch (EmptyResultDataAccessException e) {
             System.err.println("해당 투표 id 를 찾지 못함 : " + votingId);

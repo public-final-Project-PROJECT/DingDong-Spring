@@ -43,7 +43,6 @@ public class StudentsService {
         return studentsRepository.findStudentsAndClassByStudentId(studentId);
     }
 
-
     public void updateData(int studentId, String studentBirth, String studentPhone, String studentAddress, String studentEtc, String parentsName, String parentsPhone, String studentGender, MultipartFile studentImg) throws IOException {
         Students students = studentsRepository.findById(studentId).orElseThrow(() -> new RuntimeException("학생을 찾을 수 없습니다."));
         students.setStudentBirth(studentBirth);
@@ -54,11 +53,10 @@ public class StudentsService {
         students.setParentsPhone(parentsPhone);
         students.setStudentGender(Students.GenderCategory.valueOf(studentGender));
         if (studentImg != null && !studentImg.isEmpty()) {
+            System.out.println("noticeImg" + studentImg.getOriginalFilename() + studentImg);
             String imgPath = noticeService.saveFile(studentImg);
             students.setStudentImg(imgPath);
         }
-        System.out.println(students.getStudentPhone());
-
         studentsRepository.save(students);
         studentsRepository.flush();
     }

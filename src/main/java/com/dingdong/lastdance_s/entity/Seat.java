@@ -9,10 +9,10 @@ public class Seat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int SeatId;  // 좌석 번호
+    private int SeatId;
 
     @Column(name = "class_id")
-    private int classId;  // 학급 고유 id
+    private int classId;
 
     @Column(name = "column_id")
     private int columnId;

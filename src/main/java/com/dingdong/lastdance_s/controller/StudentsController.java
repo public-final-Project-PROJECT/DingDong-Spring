@@ -27,12 +27,7 @@ public class StudentsController {
 
     @GetMapping("/viewClass")
     public ResponseEntity<List<StudentsDTO>> viewClass(@RequestParam("classId") int classId) {
-
-
         List<StudentsDTO> list = studentsService.getStudentsByClass(classId);
-        for (StudentsDTO studentsDTO : list) {
-            System.out.println(studentsDTO);
-        }
         return ResponseEntity.ok(list);
 
     }
@@ -82,7 +77,6 @@ public class StudentsController {
             studentsService.updateData(studentId, studentBirth, studentPhone, studentAddress, studentEtc, parentsName, parentsPhone, studentGender, studentImg);
             return ResponseEntity.ok("업데이트 성공");
         } catch (Exception e) {
-            System.out.println("t실패");
             return ResponseEntity.status(500).body(e.getMessage());
         }
     }

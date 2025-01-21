@@ -76,26 +76,6 @@ public class Students {
         this.classId = classId;
     }
 
-    @Override
-    public String toString() {
-        return "Students{" +
-                "studentId=" + studentId +
-                ", studentName='" + studentName + '\'' +
-                ", studentImg='" + studentImg + '\'' +
-                ", studentPhone='" + studentPhone + '\'' +
-                ", studentGender=" + studentGender +
-                ", studentEtc='" + studentEtc + '\'' +
-                ", studentBirth=" + studentBirth +
-                ", studentAddress='" + studentAddress + '\'' +
-                ", parentsName='" + parentsName + '\'' +
-                ", parentsPhone='" + parentsPhone + '\'' +
-                ", memo='" + memo + '\'' +
-                ", studentNo=" + studentNo +
-                ", classId=" + classId +
-                ", token='" + token + '\'' +
-                '}';
-    }
-
     public enum GenderCategory {
         남,
         여

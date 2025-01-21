@@ -3,6 +3,7 @@ package com.dingdong.lastdance_s.controller;
 import com.dingdong.lastdance_s.dto.AlertDTO;
 import com.dingdong.lastdance_s.entity.Alert;
 import com.dingdong.lastdance_s.entity.voting.Voting;
+import com.dingdong.lastdance_s.entity.voting.VotingContents;
 import com.dingdong.lastdance_s.service.AlertService;
 import com.dingdong.lastdance_s.service.StudentsService;
 import com.dingdong.lastdance_s.service.VotingService;
@@ -68,7 +69,7 @@ public class AlertController {
 
     }
 
-    // 미투표 학생 alert
+
     @PostMapping("votingUserAlertSave")
     public ResponseEntity<Object> votingUserAlertSave(@RequestBody Map<String, Object> voteData) {
         int votingId = (int) voteData.get("votingId");
@@ -76,7 +77,7 @@ public class AlertController {
         int studentId = (int) voteData.get("studentId");
 
         Alert alert = alertService.nonVotingAlertSave(classId, studentId, votingId);
-        Voting voting = (Voting) votingService.findByVotingId(votingId);
+        Voting voting = (Voting) votingService.findByClassIdAndVotingName(votingId);
         String title = voting.getVotingName();
 
         String token = studentsService.findTokenByStudentId(studentId);
@@ -107,11 +108,14 @@ public class AlertController {
     public ResponseEntity<Object> votingResultAlert(@RequestBody Map<String, Object> voteData) {
         int votingId = (int) voteData.get("votingId");
         int classId = (int) voteData.get("classId");
+        System.out.println(votingId);
+        System.out.println(classId);
 
         List<Integer> studentList =  studentsService.findStudentIdsByClassId(classId);
         Alert alert = alertService.votingResultAlert(classId, votingId);
-        Voting voting = (Voting) votingService.findByVotingId(votingId);
+        Voting voting = (Voting) votingService.findByClassIdAndVotingName(votingId);
         String title = voting.getVotingName();
+
 
         for (Integer studentId : studentList) {
 
