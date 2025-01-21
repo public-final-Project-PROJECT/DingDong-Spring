@@ -27,7 +27,12 @@ public class StudentsController {
 
     @GetMapping("/viewClass")
     public ResponseEntity<List<StudentsDTO>> viewClass(@RequestParam("classId") int classId) {
+
+
         List<StudentsDTO> list = studentsService.getStudentsByClass(classId);
+        for (StudentsDTO studentsDTO : list) {
+            System.out.println(studentsDTO);
+        }
         return ResponseEntity.ok(list);
 
     }
