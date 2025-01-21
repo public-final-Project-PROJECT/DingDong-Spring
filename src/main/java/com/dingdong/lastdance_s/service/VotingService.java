@@ -1,6 +1,7 @@
 package com.dingdong.lastdance_s.service;
 
 import com.dingdong.lastdance_s.entity.Alert;
+import com.dingdong.lastdance_s.repository.AlertRepository;
 import jakarta.transaction.Transactional;
 import com.dingdong.lastdance_s.entity.voting.Voting;
 import com.dingdong.lastdance_s.entity.voting.VotingContents;
@@ -34,6 +35,8 @@ public class  VotingService {
     private VotingRecordRepository votingRecordRepository;
     @Autowired
     private StudentsRepository studentsRepository;
+    @Autowired
+    private AlertRepository alertRepository;
 
 //    @Autowired
 //    private AlertRe alertRepository;
@@ -170,10 +173,13 @@ public class  VotingService {
 
     public boolean deleteVoting(int votingId) {
         try {
+            System.out.println("투표 id : " + votingId);
             // int id = votingId;
             votingRecordRepository.deleteByVotingId(votingId);
             votingContentsRepository.deleteByVotingId(votingId);
+            alertRepository.deleteByVotingId(votingId);
             votingRepository.deleteById(votingId);
+
             return true;
         } catch (EmptyResultDataAccessException e) {
             System.err.println("해당 투표 id 를 찾지 못함 : " + votingId);
