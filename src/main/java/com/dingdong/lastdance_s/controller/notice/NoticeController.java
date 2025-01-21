@@ -3,6 +3,8 @@ package com.dingdong.lastdance_s.controller.notice;
 
 import com.dingdong.lastdance_s.model.Notice;
 import com.dingdong.lastdance_s.model.Students;
+import com.dingdong.lastdance_s.repository.AlertRepository;
+import com.dingdong.lastdance_s.service.AlertService;
 import com.dingdong.lastdance_s.service.NoticeService;
 import com.dingdong.lastdance_s.service.StudentsService;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -34,6 +36,8 @@ public class NoticeController {
     @Autowired
     private StudentsService studentsService;
 
+    @Autowired
+    private AlertRepository alertRepository;
 
     @GetMapping("/view")
     public ResponseEntity<List<Notice>> view(
@@ -159,6 +163,10 @@ public class NoticeController {
     @PostMapping("/delete/{noticeId}")
     public ResponseEntity<Object> delete(@PathVariable("noticeId") int noticeId) {
         try {
+
+           int alertId =  alertRepository.alertDelete(noticeId);
+             alertRepository.deleteById(alertId);
+
 
             boolean isDeleted = noticeService.deleteNotice(noticeId);
 
