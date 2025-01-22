@@ -144,4 +144,33 @@ public class AlertController {
         return ResponseEntity.ok(alert);
 
     }
+    @PostMapping("/bell")
+    public ResponseEntity<?> bellAlert(@RequestBody Map<String, Object> classData) {
+        int classId = (int) classData.get("classId");
+
+        List<Integer>studentList =  studentsService.findStudentIdsByClassId(classId);
+
+        for (Integer studentId : studentList) {
+            String token = studentsService.findTokenByStudentId(studentId);
+
+            if (token != null && !token.isEmpty()) {
+                try {
+                    Message message = Message.builder()
+                            .setToken(token)
+                            .setNotification(Notification.builder()
+                                    .setTitle("수업시간")
+                                    .setBody("수업이 시작됐으니 자리에 앉아주세요~")
+                                    .build())
+                            .build();
+                    String responseMessage = FirebaseMessaging.getInstance().send(message);
+                    System.out.println("알림 전송 성공: " + responseMessage);
+                } catch (FirebaseMessagingException e) {
+                    System.err.println("알림 전송 실패 (학생 ID: " + studentId + "): " + e.getMessage());
+                }
+            } else {
+                System.err.println("유효하지 않은 토큰 (학생 ID: " + studentId + ")");
+            }
+        }
+        return ResponseEntity.ok("");
+    }
 }
