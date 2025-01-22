@@ -3,6 +3,11 @@ package com.dingdong.lastdance_s.controller;
 import com.dingdong.lastdance_s.dto.AlertDTO;
 import com.dingdong.lastdance_s.entity.Alert;
 import com.dingdong.lastdance_s.service.AlertService;
+import com.dingdong.lastdance_s.service.StudentsService;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingException;
+import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +22,9 @@ public class AlertController {
 
     @Autowired
     private AlertService alertService;
+
+    @Autowired
+    private StudentsService studentsService;
 
     @PostMapping("/register")
     public ResponseEntity<?> registerAlert(@RequestBody AlertDTO alertDTO) {
@@ -82,5 +90,34 @@ public class AlertController {
             return ResponseEntity.status(500).body("알람 불러오기 오류");
         }
 
+    }
+    @PostMapping("/bell")
+    public ResponseEntity<?> bellAlert(@RequestBody Map<String, Object> classData) {
+        int classId = (int) classData.get("classId");
+
+        List<Integer>studentList =  studentsService.findStudentIdsByClassId(classId);
+
+        for (Integer studentId : studentList) {
+            String token = studentsService.findTokenByStudentId(studentId);
+
+            if (token != null && !token.isEmpty()) {
+                try {
+                    Message message = Message.builder()
+                            .setToken(token)
+                            .setNotification(Notification.builder()
+                                    .setTitle("수업시간")
+                                    .setBody("수업이 시작됐으니 자리에 앉아주세요~")
+                                    .build())
+                            .build();
+                    String responseMessage = FirebaseMessaging.getInstance().send(message);
+                    System.out.println("알림 전송 성공: " + responseMessage);
+                } catch (FirebaseMessagingException e) {
+                    System.err.println("알림 전송 실패 (학생 ID: " + studentId + "): " + e.getMessage());
+                }
+            } else {
+                System.err.println("유효하지 않은 토큰 (학생 ID: " + studentId + ")");
+            }
+        }
+        return ResponseEntity.ok("");
     }
 }
