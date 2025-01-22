@@ -60,7 +60,7 @@ public class StudentsController {
     public ResponseEntity<String> addStudent(@RequestParam("studentNo") int studentNo, @RequestParam("studentName") String studentName, @RequestParam("classId") int classId) {
         try {
             studentsService.addStudent(studentNo, studentName, classId);
-            return ResponseEntity.ok("");
+            return ResponseEntity.ok("User info saved successfully!");
         } catch (Exception e) {
             return ResponseEntity.status(500).body(e.getMessage());
         }
