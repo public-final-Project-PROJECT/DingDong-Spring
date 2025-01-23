@@ -73,18 +73,25 @@ public class NoticeController {
     ) {
         try {
             int noticeId = noticeService.saveNotice(noticeTitle, noticeCategory, noticeContent, noticeImg, noticeFile, classId);
+            System.out.println(noticeFile);
             Map<String, Object> response = new HashMap<>();
             response.put("message", "공지사항이 등록되었습니다.");
             response.put("noticeId", noticeId);
 
 
+
            List<Integer>studentList =  studentsService.findStudentIdsByClassId(classId);
 
             for (Integer studentId : studentList) {
+
                 String token = studentsService.findTokenByStudentId(studentId);
 
                 // token이 존재하면 알림 전송
                 if (token != null && !token.isEmpty()) {
+
+
+
+
 
                     try {
                         Message message = Message.builder()

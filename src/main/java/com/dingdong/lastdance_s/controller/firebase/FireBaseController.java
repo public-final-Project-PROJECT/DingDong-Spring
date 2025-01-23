@@ -29,29 +29,13 @@ public class FireBaseController {
         String token = (String) tokenRequest.get("token");
         Integer studentId = (Integer) tokenRequest.get("studentId");
 
-        System.out.println("studentId:"+studentId);
-        studentsService.updateToken(token,studentId);
+        System.out.println("studentId:" + studentId);
+        studentsService.updateToken(token, studentId);
 
         System.out.println(token);
-        System.out.println("studentId:"+studentId);
+        System.out.println("studentId:" + studentId);
 
-        try{
-            Message message = Message.builder()
-                    .setToken(token)
-                    .setNotification(Notification.builder()
-                            .setTitle("테스트알림")
-                            .setBody("서버측 테스트 메시지")
-                            .build()).build();
-            String response = FirebaseMessaging.getInstance().send(message);
-            System.out.println(response);
-        }catch (FirebaseMessagingException e){
-            e.printStackTrace();
-        }
 
-        if (token != null && !token.isEmpty()) {
-            return ResponseEntity.ok("Token registered.");
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid token.");
-        }
+        return ResponseEntity.ok("Token registered.");
     }
 }
