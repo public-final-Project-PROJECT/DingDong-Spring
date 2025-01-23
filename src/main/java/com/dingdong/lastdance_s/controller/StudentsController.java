@@ -34,6 +34,8 @@ public class StudentsController {
 
     @GetMapping("viewClass/{studentId}")
     public ResponseEntity<StudentsDTO> viewClassId(@PathVariable("studentId") int studentId) {
+
+        System.out.println( "학생"+studentId);
         StudentsDTO list = studentsService.getStudentsAndClassByStudentId(studentId);
         System.out.println(list);
         return ResponseEntity.ok(list);
