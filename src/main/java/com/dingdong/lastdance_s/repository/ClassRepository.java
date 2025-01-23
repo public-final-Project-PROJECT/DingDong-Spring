@@ -12,6 +12,8 @@ import java.util.List;
 @Repository
 public interface ClassRepository extends JpaRepository<Class, Integer> {
 
+    List<Class> findBySchoolName(String schoolName);
+
     @Query("SELECT c FROM Class c WHERE c.grade = :grade AND c.classNo = :classNo AND c.id.id = :teacherId")
     List<Class> findByGradeAndClassNoAndUserId(int grade, int classNo, int teacherId);
 

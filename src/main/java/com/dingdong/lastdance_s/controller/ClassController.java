@@ -48,6 +48,23 @@ public class ClassController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping
+    public ResponseEntity<List<Class>> getAllClasses() {
+        List<Class> classes = classService.getAllClasses();
+        return ResponseEntity.ok(classes);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Class> getClassById(@PathVariable int id) {
+        return classService.getClassById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/school/{schoolName}")
+    public ResponseEntity<List<Class>> getClassesBySchoolName(@PathVariable String schoolName) {
+        List<Class> classes = classService.getClassesBySchoolName(schoolName);
+        return ResponseEntity.ok(classes);
+    }
+
     @GetMapping("/grade/{grade}/class/{classNo}/teacher/{teacherId}")
     public ResponseEntity<List<Class>> getClassesByGradeAndClassNo(@PathVariable int grade, @PathVariable int classNo, @PathVariable int teacherId) {
         List<Class> classes = classService.getClassesByGradeAndClassNoAndTeacherId(grade, classNo, teacherId);

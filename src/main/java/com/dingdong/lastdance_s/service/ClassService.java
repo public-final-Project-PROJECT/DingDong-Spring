@@ -63,6 +63,18 @@ public class ClassService {
         return "Class created successfully.";
     }
 
+    public List<Class> getAllClasses() {
+        return classRepository.findAll();
+    }
+
+    public Optional<Class> getClassById(int id) {
+        return classRepository.findById(id);
+    }
+
+    public List<Class> getClassesBySchoolName(String schoolName) {
+        return classRepository.findBySchoolName(schoolName);
+    }
+
     public List<Class> getClassesByGradeAndClassNoAndTeacherId(int grade, int classNo, int teacherId) {
         return classRepository.findByGradeAndClassNoAndUserId(grade, classNo, teacherId);
     }
