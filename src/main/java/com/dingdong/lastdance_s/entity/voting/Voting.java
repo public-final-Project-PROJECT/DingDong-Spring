@@ -13,31 +13,31 @@ public class Voting {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int votingId;  // 투표 고유 id
+    private int votingId;
 
     @Column(name = "class_id")
-    private int classId;  // 학급 고유 id
+    private int classId;
 
     @Column(name = "voting_name")
-    private String votingName;  // 투표 제목
+    private String votingName;
 
     @Column(name = "voting_detail")
-    private String votingDetail;  // 투표 설명
+    private String votingDetail;
 
     @Column(name = "voting_end")
-    private LocalDateTime votingEnd;  // 투표 마감일
+    private LocalDateTime votingEnd;
 
     @Column(name = "created_at")
-    private LocalDateTime createdAt;  // 투표 생성일
+    private LocalDateTime createdAt;
 
     @Column(name = "is_vote")
-    private boolean isVote;  // 투표 진행 여부
+    private boolean isVote;
 
     @Column(name = "anonymous_vote")
-    private boolean anonymousVote;  // 비밀 투표 여부
+    private boolean anonymousVote;
 
     @Column(name = "double_voting")
-    private boolean doubleVote;  // 중복 투표 가능 여부
+    private boolean doubleVote;
 
     public Voting() {
     }

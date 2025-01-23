@@ -28,14 +28,12 @@ public class FireBaseController {
 
         String token = (String) tokenRequest.get("token");
         Integer studentId = (Integer) tokenRequest.get("studentId");
+        studentsService.updateToken(token,studentId);
 
-        System.out.println("studentId:" + studentId);
-        studentsService.updateToken(token, studentId);
-
-        System.out.println(token);
-        System.out.println("studentId:" + studentId);
-
-
-        return ResponseEntity.ok("Token registered.");
+        if (token != null && !token.isEmpty()) {
+            return ResponseEntity.ok("Token registered.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid token.");
+        }
     }
 }

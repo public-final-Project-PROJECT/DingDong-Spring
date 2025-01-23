@@ -9,16 +9,16 @@ public class VotingRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int VotingRecordId;  // 학생 투표 정보 고유 id
+    private int VotingRecordId;
 
     @Column(name = "voting_id")
-    private int votingId;  // 투표 고유 id
+    private int votingId;
 
     @Column(name = "contents_id")
-    private int contentsId;  // 투표 항목 고유 id
+    private int contentsId;
 
     @Column(name = "student_id")
-    private int studentId;  // 학생 고유 id
+    private int studentId;
 
     public VotingRecord() {
     }

@@ -16,6 +16,7 @@ public interface AlertRepository extends JpaRepository<Alert, Integer> {
     @Query("SELECT s FROM Alert s WHERE (s.classId = :classId OR s.studentId = :studentId) AND s.isRead = false")
     List<Alert> findByClassIdOrStudentId(int classId, Integer studentId);
 
+    void deleteByVotingId(int votingId);
 
     @Query("SELECT s.alertId FROM  Alert s WHERE s.noticeId = :noticeId")
     int alertDelete(int noticeId);

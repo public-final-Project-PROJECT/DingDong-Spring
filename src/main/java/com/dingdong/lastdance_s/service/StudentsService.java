@@ -3,13 +3,11 @@ package com.dingdong.lastdance_s.service;
 import com.dingdong.lastdance_s.dto.StudentsDTO;
 import com.dingdong.lastdance_s.model.Students;
 import com.dingdong.lastdance_s.repository.StudentsRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -43,7 +41,6 @@ public class StudentsService {
         return studentsRepository.findStudentsAndClassByStudentId(studentId);
     }
 
-
     public void updateData(int studentId, String studentBirth, String studentPhone, String studentAddress, String studentEtc, String parentsName, String parentsPhone, String studentGender, MultipartFile studentImg) throws IOException {
         Students students = studentsRepository.findById(studentId).orElseThrow(() -> new RuntimeException("학생을 찾을 수 없습니다."));
         students.setStudentBirth(studentBirth);
@@ -54,11 +51,10 @@ public class StudentsService {
         students.setParentsPhone(parentsPhone);
         students.setStudentGender(Students.GenderCategory.valueOf(studentGender));
         if (studentImg != null && !studentImg.isEmpty()) {
+            System.out.println("noticeImg" + studentImg.getOriginalFilename() + studentImg);
             String imgPath = noticeService.saveFile(studentImg);
             students.setStudentImg(imgPath);
         }
-        System.out.println(students.getStudentPhone());
-
         studentsRepository.save(students);
         studentsRepository.flush();
     }
