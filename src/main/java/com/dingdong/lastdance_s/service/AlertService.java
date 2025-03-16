@@ -39,7 +39,8 @@ public class AlertService {
         Alert alert = alertRepository.findById(alertId).orElseThrow(() -> new IllegalArgumentException("No alert found with ID: " + alertId));
 
 
-        alertRepository.delete(alert);
+        alert.setIsRead(true);
+        alertRepository.save(alert);
     }
 
     public Alert nonVotingAlertSave(int classId, int studentId, int votingId) {

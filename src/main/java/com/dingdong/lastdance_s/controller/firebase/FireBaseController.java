@@ -30,21 +30,6 @@ public class FireBaseController {
         Integer studentId = (Integer) tokenRequest.get("studentId");
         studentsService.updateToken(token,studentId);
 
-        System.out.println(token);
-
-        try{
-            Message message = Message.builder()
-                    .setToken(token)
-                    .setNotification(Notification.builder()
-                            .setTitle("테스트알림")
-                            .setBody("서버측 테스트 메시지")
-                            .build()).build();
-            String response = FirebaseMessaging.getInstance().send(message);
-            System.out.println(response);
-        }catch (FirebaseMessagingException e){
-            e.printStackTrace();
-        }
-
         if (token != null && !token.isEmpty()) {
             return ResponseEntity.ok("Token registered.");
         } else {

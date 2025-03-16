@@ -34,6 +34,8 @@ public class StudentsController {
 
     @GetMapping("viewClass/{studentId}")
     public ResponseEntity<StudentsDTO> viewClassId(@PathVariable("studentId") int studentId) {
+
+        System.out.println( "학생"+studentId);
         StudentsDTO list = studentsService.getStudentsAndClassByStudentId(studentId);
         System.out.println(list);
         return ResponseEntity.ok(list);
@@ -60,7 +62,7 @@ public class StudentsController {
     public ResponseEntity<String> addStudent(@RequestParam("studentNo") int studentNo, @RequestParam("studentName") String studentName, @RequestParam("classId") int classId) {
         try {
             studentsService.addStudent(studentNo, studentName, classId);
-            return ResponseEntity.ok("");
+            return ResponseEntity.ok("User info saved successfully!");
         } catch (Exception e) {
             return ResponseEntity.status(500).body(e.getMessage());
         }

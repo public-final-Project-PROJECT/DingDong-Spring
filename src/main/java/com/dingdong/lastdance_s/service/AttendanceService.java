@@ -25,6 +25,7 @@ public class AttendanceService {
 
 
     public List<AttendanceDTO> getTodayAttendance(int classId, LocalDate attendanceDate) {
+        System.out.println(attendanceDate);
         List<AttendanceDTO> list =   attendanceRepository.findByClassIdAndAttendanceDate(classId,attendanceDate);
         return list;
 

@@ -12,10 +12,12 @@ import java.util.*;
 @RequestMapping("/api/seat")
 public class SeatController {
 
-    @Autowired
-    private SeatService seatService;
+    private final SeatService seatService;
 
-
+    public SeatController(SeatService seatService) {
+        this.seatService = seatService;
+    }
+    
     @PostMapping("/findAllSeat")
     public ResponseEntity<Object> findAllSeat(@RequestBody Map<String, Object> params) {
         try {
